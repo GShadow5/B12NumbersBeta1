@@ -13,19 +13,25 @@
 public static int DECIMAL = 65;
 
 Clock clock;
+B12Char p;
+B12Char t;
 
 void setup(){
   size(400,400);
   clock = new Clock(new STime48());
   println("waiting");
+  p = new B12Char('+');
+  t = new B12Char('/');
 }
 
 void draw(){
   background(196);
   translate(width/2,height/2);
-  scale(1);
+  scale(2);
   point(0,0);
   clock.display();
+  //p.display();
+  t.display();
 }
 
 void mouseClicked(){
