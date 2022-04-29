@@ -13,11 +13,9 @@ class B12Digit{
   
   B12Digit(char _c){
     String valid = "+-*/.:"; // Defines valid input characters
-    if(inStr(valid, _c)){
-      value = byte(_c);
-    }else{ 
-      throw new IllegalArgumentException("B12Char only accepts \'+ - * / . :'"); 
-    }
+    if(!inStr(valid, _c)){ throw new IllegalArgumentException("B12Char only accepts \'+ - * / . :'"); }
+    value = byte(_c);
+    refPos = new PVector(0,0);
   }
   
   // SETTERS
@@ -32,7 +30,7 @@ class B12Digit{
   // RENDER CHARACTERS
   void display(){
     pushMatrix();
-    translate(refPos.x,refPos.y);
+    translate(refPos.x,refPos.y); //<>//
     strokeWeight(1);
     noFill();
     ellipseMode(CORNERS);

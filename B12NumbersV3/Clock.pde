@@ -4,7 +4,7 @@ class Clock {
   B12Int hours;
   B12Int minutes;
   B12Int seconds;
-  B12Digit sep;
+  B12Digit sep; // TODO Just deprecated B12Char. Refactor to single array of B12Digits?
   B12Int fill;
   int tmillis;
   //boolean initialized;
