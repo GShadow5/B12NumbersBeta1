@@ -11,6 +11,6 @@ class MathPad{
   // TODO send characters to math
   
   void addchar(){
-    math.expression.add(new B12Char('/'));
+    //math.expression.add(new B12Char('/'));
   }
 }

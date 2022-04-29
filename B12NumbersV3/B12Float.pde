@@ -111,7 +111,7 @@ class B12Float {
     }
     
     pointPlace = digits.size();
-    digits.add(new B12Char('.'));
+    digits.add(new B12Digit('.'));
     
     while(whole > 0){
       if(whole < 12){
@@ -124,7 +124,7 @@ class B12Float {
     }
     
     if(value < 0){
-      digits.add(new B12Char('-'));
+      digits.add(new B12Digit('-'));
     }
     
     arrayLoaded = true;

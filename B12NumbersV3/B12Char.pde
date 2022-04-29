@@ -1,10 +1,10 @@
-class B12Char extends B12Digit{
+/*class B12Char extends B12Digit{
   String valid;
   char c;
   
   B12Char(char _c){
     super(0);
-    valid = "+-*/.:"; // Defines valid input characters
+    valid = "+-*\/.:"; // Defines valid input characters
     if(inStr(_c)){
       c = _c;
     }else{ 
@@ -52,4 +52,4 @@ class B12Char extends B12Digit{
       return false;
     }
   }
-}
+}*/

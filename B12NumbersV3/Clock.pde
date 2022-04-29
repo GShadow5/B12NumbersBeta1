@@ -4,7 +4,7 @@ class Clock {
   B12Int hours;
   B12Int minutes;
   B12Int seconds;
-  B12Char sep;
+  B12Digit sep;
   B12Int fill;
   int tmillis;
   //boolean initialized;
@@ -15,7 +15,7 @@ class Clock {
     hours = new B12Int(t48.hours());
     minutes = new B12Int(t48.mins());
     seconds = new B12Int(t48.secs());
-    sep = new B12Char(':');
+    sep = new B12Digit(':');
     fill = new B12Int(0);
 
     hours.setMinLen(2);
@@ -51,8 +51,8 @@ class Clock {
       hours.setPos(-64, 0);
       minutes.setPos(-32, 0);
       seconds.setPos(0, 0);
-      B12Char c1 = new B12Char(':');
-      B12Char c2 = new B12Char(':');
+      B12Digit c1 = new B12Digit(':');
+      B12Digit c2 = new B12Digit(':');
       c1.setRefPos(-34, 0);
       c2.setRefPos(-66, 0);
 

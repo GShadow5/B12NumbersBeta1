@@ -13,15 +13,15 @@
 public static int DECIMAL = 65;
 
 Clock clock;
-B12Char p;
-B12Char t;
+B12Digit p;
+B12Digit t;
 
 void setup(){
   size(400,400);
   clock = new Clock(new STime48());
   println("waiting");
-  p = new B12Char('+');
-  t = new B12Char('/');
+  p = new B12Digit('+');
+  t = new B12Digit('/');
 }
 
 void draw(){

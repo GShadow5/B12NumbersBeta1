@@ -73,7 +73,7 @@ class B12Int {
       digits.add(new B12Digit(0));
     }
     if(value < 0){
-      digits.add(new B12Char('-'));
+      digits.add(new B12Digit('-'));
     }
     
     arrayLoaded = true;
