@@ -2,10 +2,11 @@ class Time48 extends Thread{
   private int sec48;
   private int min48;
   private int hour48;
-  private int tsec48;
+  private int tsec48; // Total seconds
   private boolean initialized;
   
    // CONSTRUCTORS //
+   // TODO add exceptions to all contructors
   Time48(){
     sec48 = 0;
     min48 = 0;
@@ -13,6 +14,7 @@ class Time48 extends Thread{
     tsec48 = 0;
     initialized = false;
   }
+  
   Time48(int _tsec48){
     tsec48 = _tsec48;
     flattenTSec();
@@ -24,6 +26,7 @@ class Time48 extends Thread{
     flattenTSec();
     initialized = true;
   }
+  
   Time48(int h, int m, int s){
     if(h >= 0 && h < 24){ hour48 = h;}else{throw new IllegalArgumentException();}
     if(m >= 0 && m < 48){ min48 = m;}else{throw new IllegalArgumentException();}
@@ -40,11 +43,7 @@ class Time48 extends Thread{
   int[] t48(){int[] out = {hour48,min48,sec48}; return out;}
   boolean initialized(){return initialized;}
   int b10millis(){return int(float(tsec48) * 1562.5);}
-  
-  Time48 offset(Time48 t){
-    return new Time48(t.tsec() + tsec48);
-  }
-  
+
   Time48 copy(){ return new Time48(this); }
   
   // SETTERS //
@@ -66,7 +65,7 @@ class Time48 extends Thread{
     flattenOther();
     initialized = true;
   }
-  void setTsec(int s){
+  void setTsec(int s){ // TODO add exception
     tsec48 = s;
     flattenTSec();
     initialized = true;
@@ -80,7 +79,6 @@ class Time48 extends Thread{
     
     sec48 -= min48 * 48;
     min48 -= hour48 * 48;
-    //println(t48());
   }
   private void flattenOther(){
     tsec48 = hour48*48*48 + min48*48 + sec48;

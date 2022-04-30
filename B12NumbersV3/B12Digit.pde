@@ -1,4 +1,3 @@
-//package java.base.lang;
 class B12Digit{
   byte value;
   PVector refPos;

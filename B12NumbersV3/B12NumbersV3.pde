@@ -44,4 +44,8 @@ void draw(){
 
 void mouseClicked(){
   clock.setTime(new Time48(16,0,0));
+  
+  // Decide which element is on top at mouse position (maybe by state?)
+  method("");
+  
 }

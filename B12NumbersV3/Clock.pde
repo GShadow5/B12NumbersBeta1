@@ -5,40 +5,28 @@ class Clock {
   B12Int minutes;
   B12Int seconds;
   B12Digit sep; // TODO Just deprecated B12Char. Refactor to single array of B12Digits?
-  B12Int fill;
   int tmillis;
-  //boolean initialized;
 
-  Clock(STime48 _t48) { // TODO refactor time class
+  Clock(STime48 _t48) {
     pos = new PVector(0, 0);
     t48 = _t48;
     hours = new B12Int(t48.hours());
     minutes = new B12Int(t48.mins());
     seconds = new B12Int(t48.secs());
-    sep = new B12Digit(':');
-    fill = new B12Int(0);
+    sep = new B12Digit(':'); // Seperation character between time columns
 
-    hours.setMinLen(2);
-    minutes.setMinLen(2);
+    hours.setMinLen(2); 
+    minutes.setMinLen(2); // Format all the ints to show a 0 in the 12s column if they are less than 12
     seconds.setMinLen(2);
   }
 
-  PVector getPos() { 
-    return pos;
-  }
-  void setPos(PVector _pos) { 
-    pos = _pos.copy();
-  }
-  void setPos(float _x, float _y) { 
-    pos = new PVector(_x, _y);
-  }
+  // GETTERS and SETTERS //
+  PVector getPos() { return pos; }
+  void setPos(PVector _pos) { pos = _pos.copy(); }
+  void setPos(float _x, float _y) { pos = new PVector(_x, _y);}
 
-  void setTime(Time48 _time) {
-    t48.setTime(_time);
-    //initialized = true;
-  }
-
-  //public void syncTime(){ initialized = false; } // Allows syncing after time starts running
+  void setTime(Time48 _time) { t48.setTime(_time); }
+  void resetTime() { t48.setTime(new Time48(0)); }
 
   void display() {
     if (t48.synced()) {
@@ -65,7 +53,6 @@ class Clock {
       c1.display();
       seconds.display();
       popMatrix();
-      //print(seconds.getValue());
     } else {
       text("fetching current time", pos.x, pos.y);
     }
