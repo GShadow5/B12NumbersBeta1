@@ -6,8 +6,9 @@ class Button{
   int mode; // Stores rect draw mode for button
   color col; // Stores static color
   color highlight; // Stores mouseover color
-  MethodRelay function;
+  MethodRelay function; // Gets called when button is pressed
   boolean mouseOver;
+  Object[] data; // Anything that gets passed to MethodRelay function
 
   Button(ClickHandler _ch, PVector _pos, PVector _dim, float _radius){
     ch = _ch;
@@ -19,6 +20,7 @@ class Button{
     highlight = color(100);
     mouseOver = false;
     ch.addl(new LiveMethodRelay(this, "clicked", float.class, float.class));
+    data = new Object[0];
   }
   Button(ClickHandler _ch, PVector _pos, PVector _dim){
     this(_ch, _pos, _dim, 0);
@@ -62,6 +64,7 @@ class Button{
   void clicked(float x, float y){
     if(mouseOver){
       println(x + " " + y + " mouse pos");
+      function.execute(data);
     }
   }
   
