@@ -1,3 +1,12 @@
+abstract interface Number{
+  abstract void setPos(PVector _pos);
+  abstract void setPos(float _x, float _y);
+  abstract PVector getPos();
+  
+  abstract void setAlignMode(int _mode);
+  abstract void display();
+}
+
 class B12Digit{
   byte value;
   PVector refPos;
@@ -109,7 +118,7 @@ class B12Digit{
 
 
 
-class B12Int {
+class B12Int implements Number {
   private ArrayList<B12Digit> digits;
   private int value;
   private PVector pos;
@@ -194,7 +203,7 @@ class B12Int {
 
 
 
-class B12Float {
+class B12Float implements Number{
   private ArrayList<B12Digit> digits;
   private float value;
   private PVector pos;
