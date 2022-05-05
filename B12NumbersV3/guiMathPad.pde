@@ -13,19 +13,20 @@ class MathPad{
   }
   
   void initialize(){
-    int count = 11;
     for(int i = 0; i < 12; i++){
-      buttons[i] = new B12Button(ch, new PVector(25 * int(i%4),25 * floor(i/4)), new PVector(20,20),new B12Digit(i));
+      buttons[i] = new B12Button(this, ch, new PVector(25 * int(i%4),25 * floor(i/4)), new PVector(20,20),new B12Digit(i));
       buttons[i].setColor(220,150);
     }
   }
-  // TODO draw a grid for buttons
-  // TODO draw characters in grid
-  // TODO detect mousepresses on the buttons (maybe a global mouse handler?)
+  // DONE draw a grid for buttons
+  // DONE draw characters in grid
+  // DONE detect mousepresses on the buttons (maybe a global mouse handler?)
   // TODO send characters to math
   
-  void addchar(){
+  void addChar(B12Digit digit){
+    //math.addChar(digit);
     //math.expression.add(new B12Char('/'));
+    println("clicked " + digit.getValue());
   }
   
   void display(){
@@ -41,19 +42,28 @@ class MathPad{
 }
 
 class B12Button extends Button{
+  Object parent;
   B12Digit digit;
   
-  B12Button(ClickHandler _ch, PVector _pos, PVector _dim, float _radius, B12Digit _digit){
+  B12Button(Object _parent, ClickHandler _ch, PVector _pos, PVector _dim, float _radius, B12Digit _digit){
     super(_ch,_pos,_dim,_radius);
     digit = _digit;
+    parent = _parent;
   }
-  B12Button(ClickHandler _ch, PVector _pos, PVector _dim, B12Digit _digit){
-    this(_ch, _pos, _dim, 2, _digit);
+  B12Button(Object _parent, ClickHandler _ch, PVector _pos, PVector _dim, B12Digit _digit){
+    this(_parent, _ch, _pos, _dim, 2, _digit);
   }
   
   // GETTERS AND SETTERS //
   B12Digit getDigit(){ return digit; }
   void setDigit(B12Digit _digit){ digit = _digit; }
+  
+  @Override
+  void clicked(float x, float y){
+    if(mouseOver){
+      new MethodRelay(parent, "addChar", B12Digit.class).execute(digit);
+    }
+  }
   
   @Override
   void display(){
