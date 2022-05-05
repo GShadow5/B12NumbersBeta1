@@ -20,7 +20,7 @@ class Button{
     highlight = color(100);
     mouseOver = false;
     ch.addl(new LiveMethodRelay(this, "clicked", float.class, float.class));
-    data = new Object[0];
+    data = null;
   }
   Button(ClickHandler _ch, PVector _pos, PVector _dim){
     this(_ch, _pos, _dim, 0);

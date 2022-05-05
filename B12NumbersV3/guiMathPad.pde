@@ -47,7 +47,7 @@ class B12Button extends Button{
   
   B12Button(ClickHandler _ch, PVector _pos, PVector _dim, float _radius, B12Digit _digit){
     super(_ch,_pos,_dim,_radius);
-    data = (Object[])append(data, _digit);
+    data = new Object[]{_digit}; //(Object[])append(data, _digit); commented version deprecated. required initializing array in Button
     digit = _digit;
   }
   B12Button(ClickHandler _ch, PVector _pos, PVector _dim, B12Digit _digit){
