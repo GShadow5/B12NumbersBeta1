@@ -12,7 +12,7 @@ class ClickHandler{
   
   void clean(){
     if(mrs.length == 0) return;
-    for(int i = mrs.length; i >= 0; i--){
+    for(int i = mrs.length -1; i >= 0; i--){
       if(!mrs[i].live){
         mrs[i] = mrs[mrs.length - 1];
         mrs = (LiveMethodRelay[])shorten(mrs);

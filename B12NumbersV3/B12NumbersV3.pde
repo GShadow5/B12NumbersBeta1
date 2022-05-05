@@ -28,16 +28,24 @@
     to be fine with simply swithing out the reference.
 */
 
+float scale = 2;
+PVector offset;
+float sMouseX;
+float sMouseY;
 public static final int DECIMAL = 65;
 ClickHandler ch; // Mouse event handler
 
 Clock clock; //<>//
 B12Digit p;
 B12Digit t;
+MathPad m;
 
 void setup(){
   size(400,400);
+  offset = new PVector(width/2, height/2);
   ch = new ClickHandler();
+  
+  m = new MathPad(ch,new B12Math());
   
   clock = new Clock(new STime48());
   println("waiting");
@@ -47,19 +55,23 @@ void setup(){
 
 void draw(){
   background(196);
-  translate(width/2,height/2);
-  scale(2);
+  sMouseX = (mouseX - offset.x)/scale;
+  sMouseY = (mouseY - offset.y)/scale;
+  translate(offset.x,offset.y);
+  scale(scale);
   point(0,0);
+  m.display();
   clock.display();
   //p.display();
   t.display();
+  //println( + " " + ;
 }
 
 void mouseClicked(){
   //clock.setTime(new Time48(16,0,0));
   
   // Every clickable element needs check whether the mouse is over it every frame, and if both clicked and mouseover then do action.
-  ch.cascade(mouseX,mouseY);
+  ch.cascade(sMouseX, sMouseY);
 }
 
 void call(String _call){

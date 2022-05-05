@@ -6,6 +6,7 @@ class Button{
   int mode; // Stores rect draw mode for button
   color col; // Stores static color
   color highlight; // Stores mouseover color
+  MethodRelay function;
   boolean mouseOver;
 
   Button(ClickHandler _ch, PVector _pos, PVector _dim, float _radius){
@@ -28,6 +29,7 @@ class Button{
   float getRadius(){return radius;}
   color getColor(){return col;}
   color getHighlight(){return highlight;}
+  MethodRelay getFunction(){return function;}
   int getMode(){return mode; }
   
   // SETTERS //
@@ -36,6 +38,7 @@ class Button{
   void setColor(color c){col = c; }
   void setColor(color c, color h){col = c; highlight = h;}
   void setHighlight(color h){ highlight = h; }
+  void setFunction(MethodRelay _function){function = _function;} // TODO finish implementation
   
   void setMode(int m){
     if(m == CORNER || m == CORNERS || m == CENTER || m == RADIUS){
@@ -47,8 +50,9 @@ class Button{
   
   // DISPLAY //
   void display(){
+    noStroke();
     rectMode(mode);
-    new MethodRelay(this,"mouseOver" + str(mode), float.class, float.class).execute(mouseX,mouseY);
+    new MethodRelay(this, "mouseOver" + str(mode), float.class, float.class).execute(sMouseX,sMouseY);
     fill(mouseOver ? highlight : col);
     rect(pos.x,pos.y,dim.x,dim.y,radius);
   }
@@ -65,7 +69,7 @@ class Button{
   // The numbers in the method name correspond to the mode ids because the method gets called with a relay
   void mouseOver0(float x, float y){ // CORNER
     //println("CORNER");
-    if(x < pos.x || x > dim.x + pos.x || y < pos.x || y > dim.y + pos.y) 
+    if(x < pos.x || x > pos.x + dim.x || y < pos.y || y > dim.y + pos.y) 
     {
       mouseOver = false; 
       return;

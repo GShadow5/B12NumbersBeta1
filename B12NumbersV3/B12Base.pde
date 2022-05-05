@@ -4,7 +4,7 @@ class B12Digit{
   
   B12Digit(int _value){
     if(_value >= 12 || _value < 0){ 
-      throw new IllegalArgumentException("B12Digit only accepts decimal integers 0 through 11"); 
+      throw new IllegalArgumentException("B12Digit only accepts decimal integers 0 through 11 -- " + _value); 
     }
     value = byte(_value);
     refPos = new PVector(0,0);
@@ -32,6 +32,7 @@ class B12Digit{
     translate(refPos.x,refPos.y);
     strokeWeight(1);
     noFill();
+    stroke(1);
     ellipseMode(CORNERS);
     switch(value) {
       // NUMBERS //
