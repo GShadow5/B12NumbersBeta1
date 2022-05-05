@@ -47,8 +47,9 @@ class B12Button extends Button{
   
   B12Button(ClickHandler _ch, PVector _pos, PVector _dim, float _radius, B12Digit _digit){
     super(_ch,_pos,_dim,_radius);
-    data = new Object[]{_digit}; //(Object[])append(data, _digit); commented version deprecated. required initializing array in Button
+    //data = new Object[]{_digit}; Deprecated
     digit = _digit;
+    setData(_digit);
   }
   B12Button(ClickHandler _ch, PVector _pos, PVector _dim, B12Digit _digit){
     this(_ch, _pos, _dim, 2, _digit);
@@ -58,18 +59,9 @@ class B12Button extends Button{
   B12Digit getDigit(){ return digit; }
   void setDigit(B12Digit _digit){ digit = _digit; }
   
-  /*
-  @Override
-  void clicked(float x, float y){
-    if(mouseOver){
-      new MethodRelay(target, "addChar", B12Digit.class).execute(digit);
-    }
-  }*/
-  
   @Override
   void display(){
     super.display(); //<>//
-    //new MethodRelay(this, "mouseOver" + str(mode), float.class, float.class).execute(mouseX,mouseY);
     
     pushMatrix();
     

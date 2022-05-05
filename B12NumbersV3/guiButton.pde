@@ -1,4 +1,4 @@
-class Button{
+class Button{ // TODO make most of the attributes private
   ClickHandler ch;
   PVector pos; // Position to render from
   PVector dim; // Second coordinate for CORNERS or len/wid for CORNER and CENTER
@@ -8,7 +8,7 @@ class Button{
   color highlight; // Stores mouseover color
   MethodRelay function; // Gets called when button is pressed
   boolean mouseOver;
-  Object[] data; // Anything that gets passed to MethodRelay function
+  Object[] data; // Anything that gets passed to MethodRelay function when key pressed. Must be set manually
 
   Button(ClickHandler _ch, PVector _pos, PVector _dim, float _radius){
     ch = _ch;
@@ -40,7 +40,8 @@ class Button{
   void setColor(color c){col = c; }
   void setColor(color c, color h){col = c; highlight = h;}
   void setHighlight(color h){ highlight = h; }
-  void setFunction(MethodRelay _function){function = _function;} // TODO finish implementation
+  void setFunction(MethodRelay _function){function = _function;} // DONE finish implementation
+  void setData(Object... _data){ data = _data; } // Data to pass for button presses. Ugh, note that the array already exists because it's passed as such, no need to create a new one. Stupid bug
   
   void setMode(int m){
     if(m == CORNER || m == CORNERS || m == CENTER || m == RADIUS){

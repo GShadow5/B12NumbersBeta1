@@ -3,7 +3,7 @@
     Beta version of a clock in base 12.
     by Nayan Sawyer
     started Mar 2022
-    version 0.1.4.2 April 30 2022
+    version 0.1.4.3 April 30 2022
     
     Characters are a variation of Kaktovik Inupiaq numerals
     reversed and in base 12 instead of 20. I take no credit 
