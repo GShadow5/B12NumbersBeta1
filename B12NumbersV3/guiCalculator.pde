@@ -5,7 +5,7 @@ class Calculator{
   
   Calculator(MouseHandler _mh){
     ex = new B12Expression();
-    m = new MathPad(_mh,ex);
+    m = new MathPad(_mh, ex);
     d = new MathDisplay(ex);
   }
   

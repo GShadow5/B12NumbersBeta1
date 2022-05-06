@@ -1,9 +1,17 @@
 class MouseHandler {
-  LiveMethodRelay[] mrs;
+  MouseData md;
+  private LiveMethodRelay[] mrs;
 
-  MouseHandler() {
+  MouseHandler(MouseData _md) {
+    md = _md;
     mrs = new LiveMethodRelay[0];
   }
+  
+  float sMouseX(){return md.sMouseX();}
+  float sMouseY(){return md.sMouseY();}
+  float pSMouseX(){return md.pSMouseX();}
+  float pSMouseY(){return md.pSMouseY();}
+  void frameUpdate(PVector offset, float scale){md.update(offset, scale);}
 
   void addRelay(LiveMethodRelay r) {
     clean();
@@ -30,36 +38,37 @@ class MouseHandler {
   }
 }
 
-
-//class ClickHandler {
-//  LiveMethodRelay[] mrs;
-
-//  ClickHandler() {
-//    mrs = new LiveMethodRelay[0];
-//  }
-
-//  void addl(MethodRelay l) {
-//    clean();
-//    mrs = (LiveMethodRelay[])append(mrs, l);
-//  }
-
-//  void clean() {
-//    if (mrs.length == 0) return;
-//    for (int i = mrs.length -1; i >= 0; i--) {
-//      if (!mrs[i].live) {
-//        mrs[i] = mrs[mrs.length - 1];
-//        mrs = (LiveMethodRelay[])shorten(mrs);
-//      }
-//    }
-//  }
-
-//  void cascade(float x, float y) {
-//    for (int i = 0; i < mrs.length; i++) {
-//      mrs[i].execute(x, y);
-//    }
-//  }
-//}
-
+class MouseData{
+  private PVector offset;
+  private float scale;
+  private float sMouseX;
+  private float sMouseY;
+  private float pSMouseX;
+  private float pSMouseY;
+  
+  MouseData(PVector _offset, float _scale){
+    offset = _offset;
+    scale = _scale;
+    sMouseX = (mouseX - offset.x)/scale; 
+    sMouseY = (mouseY - offset.y)/scale;
+    pSMouseX = (pmouseX - offset.x)/scale;
+    pSMouseY = (pmouseY - offset.y)/scale;
+  }
+  
+  void update(PVector _offset, float _scale){
+    offset = _offset;
+    scale = _scale;
+    sMouseX = (mouseX - offset.x)/scale; 
+    sMouseY = (mouseY - offset.y)/scale;
+    pSMouseX = (pmouseX - offset.x)/scale;
+    pSMouseY = (pmouseY - offset.y)/scale;
+  }
+  
+  float sMouseX(){return sMouseX;}
+  float sMouseY(){return sMouseY;}
+  float pSMouseX(){return pSMouseX;}
+  float pSMouseY(){return pSMouseY;}
+}
 
 
 

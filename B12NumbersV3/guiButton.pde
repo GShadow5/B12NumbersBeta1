@@ -19,7 +19,7 @@ class Button{ // TODO make most of the attributes private
     col = color(200);
     highlight = color(100);
     mouseOver = false;
-    mh.addRelay(new LiveMethodRelay(this, "clicked", 'c', Class.class));
+    mh.addRelay(new LiveMethodRelay(this, "clicked", 'c', Object.class));
     data = null;
   }
   Button(MouseHandler _mh, PVector _pos, PVector _dim){
@@ -55,15 +55,15 @@ class Button{ // TODO make most of the attributes private
   void display(){
     noStroke();
     rectMode(mode);
-    new MethodRelay(this, "mouseOver" + str(mode), float.class, float.class).execute(sMouseX,sMouseY);
+    new MethodRelay(this, "mouseOver" + str(mode), float.class, float.class).execute(mh.sMouseX(),mh.sMouseY());
     fill(mouseOver ? highlight : col);
     rect(pos.x,pos.y,dim.x,dim.y,radius);
   }
   
   
   // MOUSE FUNCTIONS //
-  void clicked(Class mp){ // mp[0] is smouseX and m[1] is smouseY
-    float[] _mp = float(mp);
+  void clicked(Object _mp){ // mp[0] is smouseX and m[1] is smouseY
+    float[] mp = (float[])_mp;
     if(mouseOver){
       println(mp[0] + " " + mp[1] + " mouse pos");
       function.execute(data);
