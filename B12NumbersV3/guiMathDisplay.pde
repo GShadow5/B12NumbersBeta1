@@ -1,14 +1,24 @@
-class MathDisplay{
-  B12Math math;
+class MathDisplay {
+  PVector pos;
+  B12Expression ex;
   
-  MathDisplay(B12Math _math){
-    math = _math;
+  MathDisplay(B12Expression _ex){
+    ex = _ex;
+    pos = new PVector(0,0);
   }
   
-  // TODO take expression from math and display it in whatever state it is in
+  PVector getPos(){ return pos; }
+  void setPos(PVector _pos){ pos = _pos; }
+  
   void display(){
-    for(int i = 0; i < math.expression.size(); i++){
-      
+    pushMatrix();
+    translate(pos.x,pos.y);
+    int count = 0;
+    for(int i = ex.length() - 1; i >= 0 ; i--){
+      ex.getDigit(i).setRefPos((-12 * (count+1)), 0);
+      ex.getDigit(i).display();
+      count++;
     }
+    popMatrix();
   }
 }

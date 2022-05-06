@@ -1,11 +1,11 @@
 class MathPad{
-  B12Math math;
+  B12Expression ex;
   ClickHandler ch;
   B12Button[] buttons;
   PVector pos;
   
-  MathPad(ClickHandler _ch, B12Math _math){
-    math = _math;
+  MathPad(ClickHandler _ch, B12Expression _ex){
+    ex = _ex;
     ch = _ch;
     pos = new PVector(0,0);
     buttons = new B12Button[12];
@@ -19,15 +19,12 @@ class MathPad{
       buttons[i].setColor(220,150);
     }
   }
-  // DONE draw a grid for buttons
-  // DONE draw characters in grid
-  // DONE detect mousepresses on the buttons (maybe a global mouse handler?)
-  // TODO send characters to math
+
+  // TODO send characters to display
   
-  void addChar(B12Digit digit){
-    //math.addChar(digit);
-    //math.expression.add(new B12Char('/'));
-    println("clicked " + digit.getValue());
+  void addChar(B12Digit _digit){
+    ex.addChar(_digit);
+    println("clicked " + _digit.getValue());
   }
   
   void display(){

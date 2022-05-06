@@ -3,13 +3,24 @@
     Beta version of a clock in base 12.
     by Nayan Sawyer
     started Mar 2022
-    version 0.1.4.3 April 30 2022
+    version 0.1.5.0 April 30 2022
     
     Characters are a variation of Kaktovik Inupiaq numerals
     reversed and in base 12 instead of 20. I take no credit 
     for the design.
     Includes method relay code be Quark - see https://forum.processing.org/two/discussion/13093/how-to-call-function-by-string-content.html
     for more details.
+    
+    changelog 0.1.5.0
+    - Quite a few changes by this point. The readme has been 
+    fixed, the button class has gone through many revisions
+    and now allows dynamic calls defined at object creation,
+    the MathPad now works and inputs B12Digits into a 
+    B12Expression, MathDisplay now works and displays the 
+    contents of a B12Expression, and many miscellaneous bugs
+    and inefficiencies have been fixed. I still need to get 
+    better at version numbering, but it is slowly getting 
+    better.
     
     changelog 0.1.4.0
     - Added MethodRelay code from Quark. Some fixes and 
@@ -35,22 +46,15 @@ float sMouseY;
 public static final int DECIMAL = 65;
 ClickHandler ch; // Mouse event handler
 
-Clock clock; //<>//
-B12Digit p;
-B12Digit t;
-MathPad m;
+Calculator calc; //<>//
 
 void setup(){
   size(400,400);
   offset = new PVector(width/2, height/2);
   ch = new ClickHandler();
   
-  m = new MathPad(ch,new B12Math());
-  
-  clock = new Clock(new STime48());
-  println("waiting");
-  p = new B12Digit('+');
-  t = new B12Digit('/');
+  calc = new Calculator(ch);
+
 }
 
 void draw(){
@@ -59,12 +63,8 @@ void draw(){
   sMouseY = (mouseY - offset.y)/scale;
   translate(offset.x,offset.y);
   scale(scale);
-  point(0,0);
-  m.display();
-  clock.display();
-  //p.display();
-  t.display();
-  //println( + " " + ;
+  
+  calc.display();
 }
 
 void mouseClicked(){
