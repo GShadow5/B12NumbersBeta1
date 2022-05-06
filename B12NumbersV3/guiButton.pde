@@ -1,5 +1,5 @@
 class Button{ // TODO make most of the attributes private
-  ClickHandler ch;
+  MouseHandler mh;
   PVector pos; // Position to render from
   PVector dim; // Second coordinate for CORNERS or len/wid for CORNER and CENTER
   float radius; // Optional corner radius
@@ -10,8 +10,8 @@ class Button{ // TODO make most of the attributes private
   boolean mouseOver;
   Object[] data; // Anything that gets passed to MethodRelay function when key pressed. Must be set manually
 
-  Button(ClickHandler _ch, PVector _pos, PVector _dim, float _radius){
-    ch = _ch;
+  Button(MouseHandler _mh, PVector _pos, PVector _dim, float _radius){
+    mh = _mh;
     pos = _pos.copy();
     dim = _dim.copy();
     radius = _radius;
@@ -19,11 +19,11 @@ class Button{ // TODO make most of the attributes private
     col = color(200);
     highlight = color(100);
     mouseOver = false;
-    ch.addl(new LiveMethodRelay(this, "clicked", float.class, float.class));
+    mh.addRelay(new LiveMethodRelay(this, "clicked", 'c', Class.class));
     data = null;
   }
-  Button(ClickHandler _ch, PVector _pos, PVector _dim){
-    this(_ch, _pos, _dim, 0);
+  Button(MouseHandler _mh, PVector _pos, PVector _dim){
+    this(_mh, _pos, _dim, 0);
   }
   
   // GETTERS //
@@ -40,7 +40,7 @@ class Button{ // TODO make most of the attributes private
   void setColor(color c){col = c; }
   void setColor(color c, color h){col = c; highlight = h;}
   void setHighlight(color h){ highlight = h; }
-  void setFunction(MethodRelay _function){function = _function;} // DONE finish implementation
+  void setFunction(MethodRelay _function){function = _function;}
   void setData(Object... _data){ data = _data; } // Data to pass for button presses. Ugh, note that the array already exists because it's passed as such, no need to create a new one. Stupid bug
   
   void setMode(int m){
@@ -62,9 +62,10 @@ class Button{ // TODO make most of the attributes private
   
   
   // MOUSE FUNCTIONS //
-  void clicked(float x, float y){
+  void clicked(Class mp){ // mp[0] is smouseX and m[1] is smouseY
+    float[] _mp = float(mp);
     if(mouseOver){
-      println(x + " " + y + " mouse pos");
+      println(mp[0] + " " + mp[1] + " mouse pos");
       function.execute(data);
     }
   }

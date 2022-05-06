@@ -1,12 +1,12 @@
 class MathPad{
   B12Expression ex;
-  ClickHandler ch;
+  MouseHandler mh;
   B12Button[] buttons;
   PVector pos;
   
-  MathPad(ClickHandler _ch, B12Expression _ex){
+  MathPad(MouseHandler _mh, B12Expression _ex){
     ex = _ex;
-    ch = _ch;
+    mh = _mh;
     pos = new PVector(0,0);
     buttons = new B12Button[12];
     initialize();
@@ -14,7 +14,7 @@ class MathPad{
   
   void initialize(){
     for(int i = 0; i < 12; i++){
-      buttons[i] = new B12Button(ch, new PVector(25 * int(i%4),25 * floor(i/4)), new PVector(20,20),new B12Digit(i));
+      buttons[i] = new B12Button(mh, new PVector(25 * int(i%4),25 * floor(i/4)), new PVector(20,20),new B12Digit(i));
       buttons[i].setFunction(new MethodRelay(this, "addChar", B12Digit.class));
       buttons[i].setColor(220,150);
     }
@@ -42,14 +42,14 @@ class MathPad{
 class B12Button extends Button{
   B12Digit digit;
   
-  B12Button(ClickHandler _ch, PVector _pos, PVector _dim, float _radius, B12Digit _digit){
-    super(_ch,_pos,_dim,_radius);
+  B12Button(MouseHandler _mh, PVector _pos, PVector _dim, float _radius, B12Digit _digit){
+    super(_mh,_pos,_dim,_radius);
     //data = new Object[]{_digit}; Deprecated
     digit = _digit;
     setData(_digit);
   }
-  B12Button(ClickHandler _ch, PVector _pos, PVector _dim, B12Digit _digit){
-    this(_ch, _pos, _dim, 2, _digit);
+  B12Button(MouseHandler _mh, PVector _pos, PVector _dim, B12Digit _digit){
+    this(_mh, _pos, _dim, 2, _digit);
   }
   
   // GETTERS AND SETTERS //

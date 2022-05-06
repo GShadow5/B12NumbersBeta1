@@ -1,51 +1,88 @@
-class ClickHandler{
+class MouseHandler {
   LiveMethodRelay[] mrs;
-  
-  ClickHandler(){
+
+  MouseHandler() {
     mrs = new LiveMethodRelay[0];
   }
-  
-  void addl(MethodRelay l){
+
+  void addRelay(LiveMethodRelay r) {
     clean();
-    mrs = (LiveMethodRelay[])append(mrs,l);
+    if(r.getTag() == '\0'){ throw new IllegalArgumentException("MouseHandler only accepts tagged LiveMethodRelays"); }
+    mrs = (LiveMethodRelay[])append(mrs, r);
   }
-  
-  void clean(){
-    if(mrs.length == 0) return;
-    for(int i = mrs.length -1; i >= 0; i--){
-      if(!mrs[i].live){
+
+  void clean() {
+    if (mrs.length == 0) return;
+    for (int i = mrs.length -1; i >= 0; i--) {
+      if (!mrs[i].live()) {
         mrs[i] = mrs[mrs.length - 1];
         mrs = (LiveMethodRelay[])shorten(mrs);
       }
     }
   }
-  
-  void cascade(float x, float y){
-    for(int i = 0; i < mrs.length; i++){
-      mrs[i].execute(x,y);
+
+  void cascade(char tag, float... data) {
+    for (int i = 0; i < mrs.length; i++) {
+      if(mrs[i].getTag() == tag){
+        mrs[i].execute(data);
+      }
     }
   }
 }
 
 
+//class ClickHandler {
+//  LiveMethodRelay[] mrs;
+
+//  ClickHandler() {
+//    mrs = new LiveMethodRelay[0];
+//  }
+
+//  void addl(MethodRelay l) {
+//    clean();
+//    mrs = (LiveMethodRelay[])append(mrs, l);
+//  }
+
+//  void clean() {
+//    if (mrs.length == 0) return;
+//    for (int i = mrs.length -1; i >= 0; i--) {
+//      if (!mrs[i].live) {
+//        mrs[i] = mrs[mrs.length - 1];
+//        mrs = (LiveMethodRelay[])shorten(mrs);
+//      }
+//    }
+//  }
+
+//  void cascade(float x, float y) {
+//    for (int i = 0; i < mrs.length; i++) {
+//      mrs[i].execute(x, y);
+//    }
+//  }
+//}
 
 
-class LiveMethodRelay extends MethodRelay{
-  boolean live;
-  
-  LiveMethodRelay(Object obj, String name, Class... args){
+
+
+class LiveMethodRelay extends MethodRelay {
+  private boolean live;
+  private char tag;
+
+  LiveMethodRelay(Object obj, String name, char _tag, Class... args) {
     super(obj, name, args);
+    tag = _tag;
     live = true;
   }
-  
-  LiveMethodRelay(Object obj, String name){
-    super(obj, name);
+  LiveMethodRelay(Object obj, String name, Class... args) {
+    super(obj, name, args);
+    tag = '\0';
     live = true;
   }
+
+  char getTag() {return tag;}
+  void setTag(char t) {tag = t;}
   
-  void kill(){
-    live = false;
-  }
+  boolean live() {return live;}
+  void kill() {live = false;}
 }
 
 
@@ -72,7 +109,7 @@ public static class MethodRelay {
    Register a method that has parameters.
    parameter obj the object that contains the method to invoke
    parameter name the name of the method
-   parameter args a comma separated list of  
+   parameter args a comma separated list of
    */
   MethodRelay(Object obj, String name, Class... args) {
     try {
@@ -80,7 +117,7 @@ public static class MethodRelay {
       parameters = args;
       handlerMethod = obj.getClass().getMethod(handlerMethodName, parameters);
       handlerObject = obj;
-    } 
+    }
     catch (Exception e) {
       println("Unable to find the function -");
       print(handlerMethodName + "( ");
@@ -110,14 +147,14 @@ public static class MethodRelay {
 
   /**
    Execute a method with parameters
-   parameter data a comma separated list of values 
+   parameter data a comma separated list of values
    to be passed to the method
    */
   void execute(Object... data) {
     if (handlerObject != null) {
       try {
         handlerMethod.invoke(handlerObject, data);
-      } 
+      }
       catch (Exception e) {
         println("Error on invoke");
       }

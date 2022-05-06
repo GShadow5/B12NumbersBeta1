@@ -3,9 +3,9 @@ class Calculator{
   MathPad m;
   MathDisplay d;
   
-  Calculator(ClickHandler _ch){
+  Calculator(MouseHandler _mh){
     ex = new B12Expression();
-    m = new MathPad(_ch,ex);
+    m = new MathPad(_mh,ex);
     d = new MathDisplay(ex);
   }
   

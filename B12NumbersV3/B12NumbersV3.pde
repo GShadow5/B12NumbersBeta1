@@ -11,6 +11,14 @@
     Includes method relay code be Quark - see https://forum.processing.org/two/discussion/13093/how-to-call-function-by-string-content.html
     for more details.
     
+    // TODO redo mouse handling
+    // TODO add cursor and dynamic position for MathDisplay (Maybe add a "highlighted" attribute to B12Digit?) might need some restructuring
+    // TODO add parsing expression to operable math string (tricky to get base 12 to base 10)
+    // TODO add operator and action buttons to MathPad
+    // TODO add parenthesis functionality
+    // MAYBE start clock widget structure
+    // MAYBE add additional operations like power, log, and trig functions
+    
     changelog 0.1.5.0
     - Quite a few changes by this point. The readme has been 
     fixed, the button class has gone through many revisions
@@ -44,16 +52,16 @@ PVector offset;
 float sMouseX;
 float sMouseY;
 public static final int DECIMAL = 65;
-ClickHandler ch; // Mouse event handler
+MouseHandler mh; // Mouse event handler
 
 Calculator calc; //<>//
 
 void setup(){
   size(400,400);
   offset = new PVector(width/2, height/2);
-  ch = new ClickHandler();
+  mh = new MouseHandler();
   
-  calc = new Calculator(ch);
+  calc = new Calculator(mh);
 
 }
 
@@ -71,7 +79,7 @@ void mouseClicked(){
   //clock.setTime(new Time48(16,0,0));
   
   // Every clickable element needs check whether the mouse is over it every frame, and if both clicked and mouseover then do action.
-  ch.cascade(sMouseX, sMouseY);
+  mh.cascade('c', sMouseX, sMouseY);
 }
 
 void call(String _call){
