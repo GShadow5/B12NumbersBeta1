@@ -62,9 +62,9 @@ class B12Button extends Button{
     
     pushMatrix();
     
-    translate(pos.x,pos.y);
-    switch(mode){
-      case CORNER: digit.setRefPos(dim.x/2 - 4,dim.y - 2);
+    translate(super.pos.x,super.pos.y);
+    switch(super.mode){
+      case CORNER: digit.setRefPos(super.dim.x/2 - 4, super.dim.y - 2);
     }
     
     digit.display();

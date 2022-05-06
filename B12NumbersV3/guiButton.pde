@@ -1,14 +1,15 @@
 class Button{ // TODO make most of the attributes private
-  MouseHandler mh;
-  PVector pos; // Position to render from
-  PVector dim; // Second coordinate for CORNERS or len/wid for CORNER and CENTER
-  float radius; // Optional corner radius
-  int mode; // Stores rect draw mode for button
-  color col; // Stores static color
-  color highlight; // Stores mouseover color
-  MethodRelay function; // Gets called when button is pressed
-  boolean mouseOver;
-  Object[] data; // Anything that gets passed to MethodRelay function when key pressed. Must be set manually
+  private LiveMethodRelay listener;
+  private MouseHandler mh;
+  private PVector pos; // Position to render from
+  private PVector dim; // Second coordinate for CORNERS or len/wid for CORNER and CENTER
+  private float radius; // Optional corner radius
+  private int mode; // Stores rect draw mode for button
+  private color col; // Stores static color
+  private color highlight; // Stores mouseover color
+  private MethodRelay function; // Gets called when button is pressed
+  private boolean mouseOver;
+  private Object[] data; // Anything that gets passed to MethodRelay function when key pressed. Must be set manually
 
   Button(MouseHandler _mh, PVector _pos, PVector _dim, float _radius){
     mh = _mh;
@@ -19,7 +20,8 @@ class Button{ // TODO make most of the attributes private
     col = color(200);
     highlight = color(100);
     mouseOver = false;
-    mh.addRelay(new LiveMethodRelay(this, "clicked", 'c', Object.class));
+    listener = new LiveMethodRelay(this, "clicked", 'p', Object.class);
+    mh.addRelay(listener);
     data = null;
   }
   Button(MouseHandler _mh, PVector _pos, PVector _dim){
@@ -120,5 +122,13 @@ class Button{ // TODO make most of the attributes private
       return;
     }
     mouseOver = true;
+  }
+  
+  // GARBAGE COLLECTION //
+  // kill the mouse listener so it will get removed from the mouse event cascade
+  @Override
+  protected void finalize(){ 
+    println("finalized");
+    listener.kill();
   }
 }

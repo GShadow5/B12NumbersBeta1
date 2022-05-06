@@ -11,7 +11,8 @@
     Includes method relay code be Quark - see https://forum.processing.org/two/discussion/13093/how-to-call-function-by-string-content.html
     for more details.
     
-    // TODO redo mouse handling -- in progress
+    // TODO redo position data handling
+    // WORKING redo mouse handling 
     // TODO add cursor and dynamic position for MathDisplay (Maybe add a "highlighted" attribute to B12Digit?) might need some restructuring
     // TODO add parsing expression to operable math string (tricky to get base 12 to base 10)
     // TODO add operator and action buttons to MathPad
@@ -20,7 +21,10 @@
     // MAYBE add additional operations like power, log, and trig functions
     
     changelog 0.1.5.2
-    - major changes to mouse handling
+    - major changes to mouse handling, and MethodRelay now
+    uses weak references rather than strong references so
+    that there will no longer be the possibility of dangling
+    objects. This allows gc to collect dead buttons, Yay!
     
     changelog 0.1.5.0
     - Quite a few changes by this point. The readme has been 

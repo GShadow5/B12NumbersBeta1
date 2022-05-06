@@ -1,5 +1,5 @@
 class MouseHandler {
-  MouseData md;
+  private MouseData md;
   private LiveMethodRelay[] mrs;
 
   MouseHandler(MouseData _md) {
@@ -7,11 +7,13 @@ class MouseHandler {
     mrs = new LiveMethodRelay[0];
   }
   
+  // PASSTHROUGH FOR MOUSE DATA //
   float sMouseX(){return md.sMouseX();}
   float sMouseY(){return md.sMouseY();}
   float pSMouseX(){return md.pSMouseX();}
   float pSMouseY(){return md.pSMouseY();}
-  void frameUpdate(PVector offset, float scale){md.update(offset, scale);}
+  void frameUpdate(PVector offset, float scale){md.update(offset, scale);  println(mrs.length + " " + millis());}
+
 
   void addRelay(LiveMethodRelay r) {
     clean();
@@ -30,6 +32,7 @@ class MouseHandler {
   }
 
   void cascade(char tag, float... data) {
+    clean();
     for (int i = 0; i < mrs.length; i++) {
       if(mrs[i].getTag() == tag){
         mrs[i].execute(data);
@@ -97,15 +100,18 @@ class LiveMethodRelay extends MethodRelay {
 
 
 import java.lang.reflect.*;
+import java.lang.ref.*;
 /**
  A class that encapsulates a named method to be invoked.
  Quark 2015
  see https://forum.processing.org/two/discussion/13093/how-to-call-function-by-string-content.html
+ Modified to use weak references
  */
 public static class MethodRelay {
 
   /** The object to handle the draw event */
-  private Object handlerObject = null;
+  private WeakReference reference = null;
+  //private Object handlerObject = null;
   /** The method in drawHandlerObject to execute */
   private Method handlerMethod = null;
   /** the name of the method to handle the event */
@@ -125,7 +131,7 @@ public static class MethodRelay {
       handlerMethodName = name;
       parameters = args;
       handlerMethod = obj.getClass().getMethod(handlerMethodName, parameters);
-      handlerObject = obj;
+      reference = new WeakReference(obj);
     }
     catch (Exception e) {
       println("Unable to find the function -");
@@ -160,9 +166,9 @@ public static class MethodRelay {
    to be passed to the method
    */
   void execute(Object... data) {
-    if (handlerObject != null) {
+    if (reference.get() != null) {
       try {
-        handlerMethod.invoke(handlerObject, data);
+        handlerMethod.invoke(reference.get(), data);
       }
       catch (Exception e) {
         println("Error on invoke");
