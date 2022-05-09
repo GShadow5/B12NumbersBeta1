@@ -8,7 +8,7 @@ class B12Expression {
   B12Digit getDigit(int index){ return expression[index]; }
   int length(){return expression.length;}
   
-  void setChar(int ind, B12Digit _digit){
+  B12Expression setChar(int ind, B12Digit _digit){
     expression = (B12Digit[])append(expression, _digit); // Add the new digit
     if(ind < expression.length - 1){ // Swap new digit
       for(int i = expression.length - 1; i > ind; i--){ // Start at second to last digit
@@ -16,10 +16,12 @@ class B12Expression {
       }
       expression[ind] = _digit;
     }
+    return this;
   }
   
-  void addChar(B12Digit _digit){
+  B12Expression addChar(B12Digit _digit){
     expression = (B12Digit[])append(expression, _digit);
+    return this;
   }
   
   void evaluate(){

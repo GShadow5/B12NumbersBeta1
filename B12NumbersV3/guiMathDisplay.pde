@@ -8,7 +8,7 @@ class MathDisplay {
   }
   
   PVector getPos(){ return pos; }
-  void setPos(PVector _pos){ pos = _pos; }
+  MathDisplay setPos(PVector _pos){ pos = _pos; return this;}
   
   void display(){
     pushMatrix();

@@ -3,7 +3,7 @@
     Beta version of a clock in base 12.
     by Nayan Sawyer
     started Mar 2022
-    version 0.1.5.2 April 30 2022
+    version 0.1.5.3 April 30 2022
     
     Characters are a variation of Kaktovik Inupiaq numerals
     reversed and in base 12 instead of 20. I take no credit 
@@ -12,13 +12,18 @@
     for more details.
     
     // TODO redo position data handling
-    // WORKING redo mouse handling 
     // TODO add cursor and dynamic position for MathDisplay (Maybe add a "highlighted" attribute to B12Digit?) might need some restructuring
     // TODO add parsing expression to operable math string (tricky to get base 12 to base 10)
     // TODO add operator and action buttons to MathPad
     // TODO add parenthesis functionality
     // MAYBE start clock widget structure
     // MAYBE add additional operations like power, log, and trig functions
+    
+    changelog 0.1.5.3
+    - restricted button presses to left mouse button only.
+    Updated button highlight color functionality. Updated all
+    classes to return themselves from their setters. This 
+    allows chaining set methods on one line.
     
     changelog 0.1.5.2
     - major changes to mouse handling, and MethodRelay now

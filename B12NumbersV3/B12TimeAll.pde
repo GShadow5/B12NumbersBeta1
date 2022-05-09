@@ -47,28 +47,32 @@ class Time48 extends Thread{
   Time48 copy(){ return new Time48(this); }
   
   // SETTERS //
-  void setHour(int h){
+  Time48 setHour(int h){
     if(h < 0 || h >= 24) throw new IllegalArgumentException();
     hour48 = h;
     flattenOther();
     initialized = true;
+    return this;
   }
-  void setMin(int m){
+  Time48 setMin(int m){
     if(m < 0 || m >= 48) throw new IllegalArgumentException();
     min48 = m;
     flattenOther();
     initialized = true;
+    return this;
   }
-  void setSec(int s){
+  Time48 setSec(int s){
     if(s < 0 || s >= 48) throw new IllegalArgumentException();
     sec48 = s;
     flattenOther();
     initialized = true;
+    return this;
   }
-  void setTsec(int s){ // TODO add exception
+  Time48 setTsec(int s){ // TODO add exception
     tsec48 = s;
     flattenTSec();
     initialized = true;
+    return this;
   }
   
   // PRIVATE FUNCTIONS //
@@ -108,10 +112,11 @@ class STime48 extends Time48{
 
   // Public sync functions
   public boolean synced(){return synced;}
-  public void syncTime(){ synced = false; } // Allows syncing after time starts running
-  public void setTime(Time48 _time){
+  public STime48 syncTime(){ synced = false; return this; } // Allows syncing after time starts running
+  public STime48 setTime(Time48 _time){
     // To get offset we subtract where the current clock is from where we want it to be
     offset = _time.b10millis() - millis() - tmillis + syncedat;
+    return this;
   }
   
   // Threaded code
@@ -169,11 +174,11 @@ class Clock {
 
   // GETTERS and SETTERS //
   PVector getPos() { return pos; }
-  void setPos(PVector _pos) { pos = _pos.copy(); }
-  void setPos(float _x, float _y) { pos = new PVector(_x, _y);}
+  Clock setPos(PVector _pos) { pos = _pos.copy(); return this;}
+  Clock setPos(float _x, float _y) { pos = new PVector(_x, _y);return this;}
 
-  void setTime(Time48 _time) { t48.setTime(_time); }
-  void resetTime() { t48.setTime(new Time48(0)); }
+  Clock setTime(Time48 _time) { t48.setTime(_time); return this;}
+  Clock resetTime() { t48.setTime(new Time48(0)); return this;}
 
   void display() {
     if (t48.synced()) {

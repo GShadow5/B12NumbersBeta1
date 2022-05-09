@@ -1,7 +1,7 @@
 class MathPad{
   B12Expression ex;
   MouseHandler mh;
-  B12Button[] buttons;
+  Button[] buttons;
   PVector pos;
   
   MathPad(MouseHandler _mh, B12Expression _ex){
@@ -14,9 +14,7 @@ class MathPad{
   
   void initialize(){
     for(int i = 0; i < 12; i++){
-      buttons[i] = new B12Button(mh, new PVector(25 * int(i%4),25 * floor(i/4)), new PVector(20,20),new B12Digit(i));
-      buttons[i].setFunction(new MethodRelay(this, "addChar", B12Digit.class));
-      buttons[i].setColor(220,150);
+      buttons[i] = new B12Button(mh, new PVector(22 * int(i%4),22 * 2 - 22 * floor(i/4)), new PVector(20,20),new B12Digit(i)).setFunction(new MethodRelay(this, "addChar", B12Digit.class)).setColor(220,150);
     }
   }
 
@@ -54,7 +52,7 @@ class B12Button extends Button{
   
   // GETTERS AND SETTERS //
   B12Digit getDigit(){ return digit; }
-  void setDigit(B12Digit _digit){ digit = _digit; }
+  B12Button setDigit(B12Digit _digit){ digit = _digit; return this; }
   
   @Override
   void display(){

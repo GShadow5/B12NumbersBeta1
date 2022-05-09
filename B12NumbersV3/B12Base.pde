@@ -1,15 +1,12 @@
 abstract interface Number{
-  abstract void setPos(PVector _pos);
-  abstract void setPos(float _x, float _y);
   abstract PVector getPos();
-  
-  abstract void setAlignMode(int _mode);
+
   abstract void display();
 }
 
 class B12Digit{
-  byte value;
-  PVector refPos;
+  private byte value;
+  private PVector refPos;
   
   B12Digit(int _value){
     if(_value >= 12 || _value < 0){ 
@@ -27,9 +24,9 @@ class B12Digit{
   }
   
   // SETTERS
-  void setRefPos(PVector _refPos){ refPos = _refPos; }
-  void setRefPos(float _x, float _y){ refPos = new PVector(_x,_y); }
-  void setValue(int _value){ value = byte(_value); }
+  B12Digit setRefPos(PVector _refPos){ refPos = _refPos; return this;}
+  B12Digit setRefPos(float _x, float _y){ refPos = new PVector(_x,_y); return this;}
+  B12Digit setValue(int _value){ value = byte(_value); return this;}
   
   // GETTERS
   PVector getRefPos(){ return refPos; }
@@ -88,24 +85,24 @@ class B12Digit{
   }
   
   // Individual shape components to build any B12 number
-  void line0(){ ellipse(0,-13,8,0); }
-  void line1(){ line(6,0,9,-10); }
-  void line2(){ line(3,-10,6,0); }
-  void line3(){ line(0,0,3,-10); }
-  void line4(){ line(9,-10,2,-13); }
-  void line8(){ line(2,-13,9,-16); }
+  private void line0(){ ellipse(0,-13,8,0); }
+  private void line1(){ line(6,0,9,-10); }
+  private void line2(){ line(3,-10,6,0); }
+  private void line3(){ line(0,0,3,-10); }
+  private void line4(){ line(9,-10,2,-13); }
+  private void line8(){ line(2,-13,9,-16); }
   
   // Individual shape components to build any B12 character
-  void lineTimes(){ line(4,-7,8,-3); line(4,-3,8,-7); }
-  void dotsDiv(){ point(6,-8); point(6,-2); }
-  void lineMinus(){ line(3,-5,9,-5); }
-  void linePlus(){ line(6,-8,6,-2); }
-  void period(){ point(5,0); }
-  void colon(){ point(5,-2); point(5,-8); }
+  private void lineTimes(){ line(4,-7,8,-3); line(4,-3,8,-7); }
+  private void dotsDiv(){ point(6,-8); point(6,-2); }
+  private void lineMinus(){ line(3,-5,9,-5); }
+  private void linePlus(){ line(6,-8,6,-2); }
+  private void period(){ point(5,0); }
+  private void colon(){ point(5,-2); point(5,-8); }
   
   
   // HELPER FUNCTIONS //
-  boolean inStr(String st, char _c){
+  private boolean inStr(String st, char _c){
     try{
       int x = st.indexOf(_c);
       return true;
@@ -137,17 +134,17 @@ class B12Int implements Number {
   }
   
   int getValue(){ return value; }
-  void setValue(int _value){ value = _value; arrayLoaded = false; }
-  
-  void setPos(PVector _pos){ pos = _pos.copy(); inPosition = false; }
-  void setPos(float _x, float _y){ pos = new PVector(_x, _y); inPosition = false; }
   PVector getPos(){ return pos; }
   
-  void setMinLen(int i){ minLen = i; }
   
-  void setAlignMode(int _mode){
+  B12Int setValue(int _value){ value = _value; arrayLoaded = false; return this;}
+  B12Int setPos(PVector _pos){ pos = _pos.copy(); inPosition = false; return this;}
+  B12Int setPos(float _x, float _y){ pos = new PVector(_x, _y); inPosition = false;return this; }
+  B12Int setMinLen(int i){ minLen = i; return this;}
+  B12Int setAlignMode(int _mode){
     if(_mode == DECIMAL || _mode == LEFT || _mode == RIGHT){ mode = _mode; }
     else{ println("Alignment only accepts LEFT, RIGHT, and DECIMAL"); }
+    return this;
   }
   
   void display(){
@@ -223,24 +220,25 @@ class B12Float implements Number{
   }
   
   float getValue(){ return value; }
-  void setValue(float _value){ value = _value; arrayLoaded = false; }
-  
   PVector getPos(){ return pos; }
-  void setPos(PVector _pos){ pos = _pos.copy(); inPosition = false; }
-  void setPos(float _x, float _y){ pos = new PVector(_x, _y); inPosition = false; }
-  
   int getPlaces(){ return places; }
-  void setPlaces(int _places){ 
+  
+  
+  B12Float setValue(float _value){ value = _value; arrayLoaded = false; return this;}
+  B12Float setPos(PVector _pos){ pos = _pos.copy(); inPosition = false;return this; }
+  B12Float setPos(float _x, float _y){ pos = new PVector(_x, _y); inPosition = false;return this; }
+  B12Float setPlaces(int _places){ 
     if(_places > 12 || _places < 0){ 
       throw new IllegalArgumentException("B12Float ncan only display to 12 duodecimal points");
     }else{
       places = _places;
     }
+    return this;
   }
-  
-  void setAlignMode(int _mode){
+  B12Float setAlignMode(int _mode){
     if(_mode == DECIMAL || _mode == LEFT || _mode == RIGHT){ mode = _mode; }
     else{ println("Alignment only accepts LEFT, RIGHT, and DECIMAL"); }
+    return this;
   }
   
   void display(){

@@ -11,8 +11,7 @@ void setup(){
   size(400,400);
   offset = new PVector(width/2, height/2);
   mh = new MouseHandler(new MouseData(offset, scale));
-  b = new Button(mh, new PVector(20,-20), new PVector(20,20));
-  b.setFunction(new MethodRelay(this, "changeMode"));
+  b = new Button(mh, new PVector(20,-20), new PVector(40,20),2).setColor(#06BA63).autoHighlight().setText("Reset").setFunction(new MethodRelay(this, "changeMode"));
   
   calc = new Calculator(mh);
 
@@ -21,11 +20,17 @@ void setup(){
 void draw(){
   background(196);
   mh.frameUpdate(offset, scale);
+  stroke(0);
+  strokeWeight(1);
+  line(width/2,0,width/2,height);
+  line(0,height/2,width,height/2);
   translate(offset.x,offset.y);
   scale(scale);
   
   if(calc != null) calc.display();
   b.display();
+  
+  
 }
 
 void mouseClicked(){

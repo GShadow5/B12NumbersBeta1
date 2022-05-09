@@ -12,7 +12,7 @@ class MouseHandler {
   float sMouseY(){return md.sMouseY();}
   float pSMouseX(){return md.pSMouseX();}
   float pSMouseY(){return md.pSMouseY();}
-  void frameUpdate(PVector offset, float scale){md.update(offset, scale);  println(mrs.length + " " + millis());}
+  void frameUpdate(PVector offset, float scale){md.update(offset, scale);}//  println(mrs.length + " " + millis());}
 
 
   void addRelay(LiveMethodRelay r) {
