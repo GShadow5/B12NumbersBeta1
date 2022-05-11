@@ -5,15 +5,21 @@ public static final int DECIMAL = 65;
 MouseHandler mh; // Mouse event handler
 
 Calculator calc;
-Button b;
+Button reset;
+Button eval;
+
 
 void setup(){
   size(400,400);
   offset = new PVector(width/2, height/2);
   mh = new MouseHandler(new MouseData(offset, scale));
-  b = new Button(mh, new PVector(20,-20), new PVector(40,20),2).setColor(#06BA63).autoHighlight().setText("Reset").setFunction(new MethodRelay(this, "changeMode"));
   
   calc = new Calculator(mh);
+  
+  reset = new Button(mh).setPos(new PVector(20,-20), new PVector(40,20)).setRadius(2).setColor(#06BA63).autoHighlight().setText("Reset").setFunction(new MethodRelay(this, "changeMode"));
+  eval = new Button(mh).setPos(new PVector(20,-40), new PVector(40,20)).setRadius(2).setColor(#06BA63).autoHighlight().setText("Eval").setFunction(new MethodRelay(calc.ex, "evaluate"));
+  
+  
 
 }
 
@@ -28,7 +34,8 @@ void draw(){
   scale(scale);
   
   if(calc != null) calc.display();
-  b.display();
+  reset.display();
+  eval.display();
   
   
 }

@@ -1,4 +1,4 @@
-class B12Math {
+/*class B12Math {
   ArrayList <B12Digit> expression;
   
   B12Math(){
@@ -12,4 +12,4 @@ class B12Math {
   void evaluate(){
     //TODO set expression to evaluation of expression
   }
-}
+}*/

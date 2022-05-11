@@ -1,10 +1,12 @@
 abstract interface Number{
   abstract PVector getPos();
+  
+  abstract Number addn(Number num);
 
   abstract void display();
 }
 
-class B12Digit{
+class B12Digit implements Number{
   private byte value;
   private PVector refPos;
   
@@ -27,10 +29,12 @@ class B12Digit{
   B12Digit setRefPos(PVector _refPos){ refPos = _refPos; return this;}
   B12Digit setRefPos(float _x, float _y){ refPos = new PVector(_x,_y); return this;}
   B12Digit setValue(int _value){ value = byte(_value); return this;}
+  Number addn(Number num){throw new UnsupportedOperationException("B12Digit does not support adding characters");}
   
   // GETTERS
-  PVector getRefPos(){ return refPos; }
+  PVector getPos(){ return refPos; }
   int getValue(){ return value; }
+  boolean isNum(){return value >= 0 && value < 12; }
   
   // RENDER CHARACTERS
   void display(){
@@ -133,10 +137,12 @@ class B12Int implements Number {
     minLen = 0;
   }
   
+  // GETTERS // 
   int getValue(){ return value; }
   PVector getPos(){ return pos; }
+  B12Float toFloat(){return new B12Float(float(value)); }
   
-  
+  // SETTERS //
   B12Int setValue(int _value){ value = _value; arrayLoaded = false; return this;}
   B12Int setPos(PVector _pos){ pos = _pos.copy(); inPosition = false; return this;}
   B12Int setPos(float _x, float _y){ pos = new PVector(_x, _y); inPosition = false;return this; }
@@ -145,6 +151,24 @@ class B12Int implements Number {
     if(_mode == DECIMAL || _mode == LEFT || _mode == RIGHT){ mode = _mode; }
     else{ println("Alignment only accepts LEFT, RIGHT, and DECIMAL"); }
     return this;
+  }
+  
+  Number addn(Number num){
+    /*if(num.getClass() == ByteE.class){
+      ByteE b = (ByteE)num;
+      value += int(b.getValue());
+      return new B12Int(value);
+    }*/
+    if(num.getClass() == B12Int.class){
+      B12Int i = (B12Int)num;
+      value += i.getValue();
+      return new B12Int(value);
+    }
+    if(num.getClass() == B12Float.class){
+      B12Float i = (B12Float)num;
+      return i.addn(this);
+    }
+    throw new IllegalArgumentException("addn only takes types B12Int and B12Float");
   }
   
   void display(){
@@ -222,6 +246,7 @@ class B12Float implements Number{
   float getValue(){ return value; }
   PVector getPos(){ return pos; }
   int getPlaces(){ return places; }
+  B12Int toInt(){return new B12Int(int(value));}
   
   
   B12Float setValue(float _value){ value = _value; arrayLoaded = false; return this;}
@@ -239,6 +264,25 @@ class B12Float implements Number{
     if(_mode == DECIMAL || _mode == LEFT || _mode == RIGHT){ mode = _mode; }
     else{ println("Alignment only accepts LEFT, RIGHT, and DECIMAL"); }
     return this;
+  }
+  
+  Number addn(Number num){
+    /*if(num.getClass() == ByteE.class){
+      ByteE b = (ByteE)num;
+      value += float(b.getValue());
+      return new B12Float(vlaue);
+    }*/
+    if(num.getClass() == B12Int.class){
+      B12Int i = (B12Int)num;
+      value += float(i.getValue());
+      return new B12Float(value);
+    }
+    if(num.getClass() == B12Float.class){
+      B12Float i = (B12Float)num;
+      value += i.getValue();
+      return new B12Float(value);
+    }
+    throw new IllegalArgumentException("addn only takes types B12Int and B12Float");
   }
   
   void display(){

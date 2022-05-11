@@ -14,12 +14,12 @@ class Button{
   private boolean mouseOver;
   private Object[] data; // Anything that gets passed to MethodRelay function when key pressed. Must be set manually
 
-  Button(MouseHandler _mh, PVector _pos, PVector _dim, float _radius){
+  Button(MouseHandler _mh){
     mh = _mh;
     
-    pos = _pos.copy();
-    dim = _dim.copy();
-    radius = _radius;
+    pos = new PVector(0,0);
+    dim = new PVector(20,20);
+    radius = 1;
     mode = CORNER;
     col = color(200);
     colorMode(HSB);
@@ -30,9 +30,6 @@ class Button{
     listener = new LiveMethodRelay(this, "clicked", 'p', Object.class);
     mh.addRelay(listener);
     data = null;
-  }
-  Button(MouseHandler _mh, PVector _pos, PVector _dim){
-    this(_mh, _pos, _dim, 0);
   }
   
   // GETTERS //
@@ -45,6 +42,9 @@ class Button{
   int getMode(){return mode; }
   
   // SETTERS //
+  Button setPos(PVector _pos){pos = _pos.copy(); return this;}
+  Button setPos(PVector _pos, PVector _dim){pos = _pos.copy(); dim = _dim.copy(); return this; }
+  Button setDim(PVector _dim){dim = _dim.copy(); return this;}
   Button setRect(PVector _pos, PVector _dim){pos = _pos; dim = _dim; return this;}
   Button setRadius(float rad){radius = rad; return this;}
   Button setColor(color c){col = c; return this;}
@@ -53,7 +53,7 @@ class Button{
   Button setHighlight(color h){ highlight = h; return this; }
   Button setText(String t){text = t; return this;}
   
-  Button setFunction(MethodRelay _function){function = _function;return this;}
+  Button setFunction(MethodRelay _function){function = _function; return this;}
   Button setData(Object... _data){ data = _data; return this;} // Data to pass for button presses. Ugh, note that the array already exists because it's passed as such, no need to create a new one. Stupid bug
   Button setMode(int m){ if(m == CORNER || m == CORNERS || m == CENTER || m == RADIUS){mode = m;return this;} /*Otherwise*/ return this;}
   
@@ -75,8 +75,7 @@ class Button{
   void clicked(Object _mp){ // mp[0] is smouseX and m[1] is smouseY
     float[] mp = (float[])_mp;
     if(mouseOver && mouseButton == LEFT){
-      //println(mp[0] + " " + mp[1] + " mouse pos");
-      //println(col + " : " + highlight);
+      //println("clicked" + this);
       function.execute(data);
     }
   }
