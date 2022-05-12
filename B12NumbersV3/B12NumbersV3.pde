@@ -1,4 +1,5 @@
 // B12NumbersV3 //
+String dbout = new String("");
 float scale = 2;
 PVector offset;
 public static final int DECIMAL = 65;
@@ -26,7 +27,10 @@ void setup(){
 }
 
 void draw(){
+  textAlign(LEFT,TOP);
+  
   background(196);
+  text(dbout,0,0); 
   mh.frameUpdate(offset, scale);
   stroke(0);
   strokeWeight(1);
@@ -38,6 +42,7 @@ void draw(){
   if(clock != null) clock.display();
   if(changeTime != null) changeTime.display();
   mode.display();
+  
 }
 
 void mouseClicked(){

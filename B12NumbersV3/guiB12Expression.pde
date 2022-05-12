@@ -37,6 +37,7 @@ class B12Expression {
   void evaluate(){
     String evalString = parseDigits();
     println(evalString);
+    dbout = evalString;
      //<>// //<>//
   }
   
