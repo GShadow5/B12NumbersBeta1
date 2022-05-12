@@ -13,15 +13,24 @@ class MathPad{
   }
   
   void initialize(){
+    // Create numpad buttons
     for(int i = 0; i < 12; i++){
       /* Button position must contain it's absolute position relative to sketch 0,0 for mouseOver to work. 
          This means we cannot translate and traw buttons, we mumst factor the parents position into the
          absolute position of the button */
       // x = pos.x + (width + gap) * (i%cols)
       // y = pos.y + (height + gap) * b2rows - (height + gap) * row
-      PVector bPos = new PVector(pos.x + 22 * int(i%4),pos.y + 22 * 2 - 22 * floor(i/4));
+      PVector bPos = new PVector(pos.x + 22 * int(i%4),pos.y + 22 * 3 - 22 * floor(i/4));
       buttons[i] = new B12Button(mh ,new B12Digit(i)).setPos(bPos).setDim(new PVector(20,20)).setFunction(new MethodRelay(this, "addChar", B12Digit.class)).setColor(220,150);
     }
+    // Create other buttons
+    buttons = (Button[])append(buttons, new B12Button(mh, new B12Digit('(')).setPos(new PVector(pos.x,pos.y)).setFunction(new MethodRelay(this, "addChar", B12Digit.class)).setColor(220,150));
+    buttons = (Button[])append(buttons, new B12Button(mh, new B12Digit(')')).setPos(new PVector(pos.x + 22,pos.y)).setFunction(new MethodRelay(this, "addChar", B12Digit.class)).setColor(220,150));
+    buttons = (Button[])append(buttons, new B12Button(mh, new B12Digit('+')).setPos(new PVector(pos.x + 22*2,pos.y)).setFunction(new MethodRelay(this, "addChar", B12Digit.class)).setColor(220,150));
+    buttons = (Button[])append(buttons, new B12Button(mh, new B12Digit('-')).setPos(new PVector(pos.x + 22*3,pos.y)).setFunction(new MethodRelay(this, "addChar", B12Digit.class)).setColor(220,150));
+    buttons = (Button[])append(buttons, new B12Button(mh, new B12Digit('*')).setPos(new PVector(pos.x + 22*4,pos.y)).setFunction(new MethodRelay(this, "addChar", B12Digit.class)).setColor(220,150));
+    buttons = (Button[])append(buttons, new B12Button(mh, new B12Digit('/')).setPos(new PVector(pos.x + 22*4,pos.y + 22)).setFunction(new MethodRelay(this, "addChar", B12Digit.class)).setColor(220,150));
+    buttons = (Button[])append(buttons, new B12Button(mh, new B12Digit('.')).setPos(new PVector(pos.x + 22*4,pos.y + 22*2)).setFunction(new MethodRelay(this, "addChar", B12Digit.class)).setColor(220,150));
   }
 
   // DONE send characters to display
@@ -34,7 +43,7 @@ class MathPad{
   void display(){
     pushMatrix();
     //translate(pos.x,pos.y);
-    for(int i = 0; i < 12; i++){
+    for(int i = 0; i < buttons.length; i++){
       buttons[i].display();
     }
     popMatrix();

@@ -11,12 +11,12 @@ Button eval;
 
 void setup(){
   size(400,400);
-  offset = new PVector(width/2, height/2);
+  offset = new PVector(width/4, height/4);
   mh = new MouseHandler(new MouseData(offset, scale));
   
   calc = new Calculator(mh);
   
-  reset = new Button(mh).setPos(new PVector(20,-20), new PVector(40,20)).setRadius(2).setColor(#06BA63).autoHighlight().setText("Reset").setFunction(new MethodRelay(this, "changeMode"));
+  reset = new Button(mh).setPos(new PVector(20,-20), new PVector(40,20)).setRadius(2).setColor(#06BA63).autoHighlight().setText("Reset").setFunction(new MethodRelay(this, "reset"));
   eval = new Button(mh).setPos(new PVector(20,-40), new PVector(40,20)).setRadius(2).setColor(#06BA63).autoHighlight().setText("Eval").setFunction(new MethodRelay(calc.ex, "evaluate"));
   
   
@@ -28,8 +28,7 @@ void draw(){
   mh.frameUpdate(offset, scale);
   stroke(0);
   strokeWeight(1);
-  line(width/2,0,width/2,height);
-  line(0,height/2,width,height/2);
+  crossMark();
   translate(offset.x,offset.y);
   scale(scale);
   
@@ -57,8 +56,18 @@ void call(String _call){
 void changeMode(){
   if(calc == null){
     calc = new Calculator(mh);
+    eval.setFunction(new MethodRelay(calc.ex, "evaluate"));
     return;
   }
   calc = null;
   Runtime.getRuntime().gc();
+}
+
+void reset(){
+  calc.ex.clear();
+}
+
+void crossMark(){
+  line(offset.x,0,offset.x,height);
+  line(0,offset.y,width,offset.y);
 }

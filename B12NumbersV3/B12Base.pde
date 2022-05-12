@@ -1,7 +1,5 @@
 abstract interface Number{
   abstract PVector getPos();
-  
-  abstract Number addn(Number num);
 
   abstract void display();
 }
@@ -19,7 +17,7 @@ class B12Digit implements Number{
   }
   
   B12Digit(char _c){
-    String valid = "+-*/.:"; // Defines valid input characters
+    String valid = "+-*/.:()"; // Defines valid input characters
     if(!inStr(valid, _c)){ throw new IllegalArgumentException("B12Char only accepts \'+ - * / . :'"); }
     value = byte(_c);
     refPos = new PVector(0,0);
@@ -29,7 +27,6 @@ class B12Digit implements Number{
   B12Digit setRefPos(PVector _refPos){ refPos = _refPos; return this;}
   B12Digit setRefPos(float _x, float _y){ refPos = new PVector(_x,_y); return this;}
   B12Digit setValue(int _value){ value = byte(_value); return this;}
-  Number addn(Number num){throw new UnsupportedOperationException("B12Digit does not support adding characters");}
   
   // GETTERS
   PVector getPos(){ return refPos; }
@@ -84,12 +81,16 @@ class B12Digit implements Number{
         strokeWeight(2); period(); break;
       case ':':
         strokeWeight(2); colon(); break;
+      case '(':
+        parenl(); break;
+      case ')':
+        parenr(); break;
     }
     popMatrix();
   }
   
   // Individual shape components to build any B12 number
-  private void line0(){ ellipse(0,-13,8,0); }
+  private void line0(){ quad(4,0,7,-6.5,4,-13,1,-6.5); }// ellipse(0,-13,8,0); }
   private void line1(){ line(6,0,9,-10); }
   private void line2(){ line(3,-10,6,0); }
   private void line3(){ line(0,0,3,-10); }
@@ -103,6 +104,8 @@ class B12Digit implements Number{
   private void linePlus(){ line(6,-8,6,-2); }
   private void period(){ point(5,0); }
   private void colon(){ point(5,-2); point(5,-8); }
+  private void parenl(){ line(5,-13,3,-6.5); line(5,0,3,-6.5); }
+  private void parenr(){ line(1,-13,3,-6.5); line(1,0,3,-6.5);}
   
   
   // HELPER FUNCTIONS //
@@ -151,24 +154,6 @@ class B12Int implements Number {
     if(_mode == DECIMAL || _mode == LEFT || _mode == RIGHT){ mode = _mode; }
     else{ println("Alignment only accepts LEFT, RIGHT, and DECIMAL"); }
     return this;
-  }
-  
-  Number addn(Number num){
-    /*if(num.getClass() == ByteE.class){
-      ByteE b = (ByteE)num;
-      value += int(b.getValue());
-      return new B12Int(value);
-    }*/
-    if(num.getClass() == B12Int.class){
-      B12Int i = (B12Int)num;
-      value += i.getValue();
-      return new B12Int(value);
-    }
-    if(num.getClass() == B12Float.class){
-      B12Float i = (B12Float)num;
-      return i.addn(this);
-    }
-    throw new IllegalArgumentException("addn only takes types B12Int and B12Float");
   }
   
   void display(){
@@ -264,25 +249,6 @@ class B12Float implements Number{
     if(_mode == DECIMAL || _mode == LEFT || _mode == RIGHT){ mode = _mode; }
     else{ println("Alignment only accepts LEFT, RIGHT, and DECIMAL"); }
     return this;
-  }
-  
-  Number addn(Number num){
-    /*if(num.getClass() == ByteE.class){
-      ByteE b = (ByteE)num;
-      value += float(b.getValue());
-      return new B12Float(vlaue);
-    }*/
-    if(num.getClass() == B12Int.class){
-      B12Int i = (B12Int)num;
-      value += float(i.getValue());
-      return new B12Float(value);
-    }
-    if(num.getClass() == B12Float.class){
-      B12Float i = (B12Float)num;
-      value += i.getValue();
-      return new B12Float(value);
-    }
-    throw new IllegalArgumentException("addn only takes types B12Int and B12Float");
   }
   
   void display(){
