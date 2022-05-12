@@ -76,7 +76,7 @@ class Button{
     fill(mouseOver ? highlight : col);
     rect(pos.x,pos.y,dim.x,dim.y,radius);
     
-    //stroke(textColor); fix this
+    fill(textColor);
     textSize(textSize);
     if(renderPriority == 0){
       while(textWidth(text) > dim.x * 0.95){ // WARNING! NOT ROBUST make this a function at some point to allow other rectModes to render properly

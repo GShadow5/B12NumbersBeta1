@@ -4,23 +4,25 @@ PVector offset;
 public static final int DECIMAL = 65;
 MouseHandler mh; // Mouse event handler
 
+B12Expression ex;
 Calculator calc;
-Button reset;
-Button eval;
+Clock clock;
+Button mode;
+Button changeTime;
+STime48 time;
+
 
 
 void setup(){
   size(400,400);
-  offset = new PVector(width/4, height/4);
+  offset = new PVector(width/2, height/2);
+  time = new STime48();
   mh = new MouseHandler(new MouseData(offset, scale));
+  ex = new B12Expression();
   
-  calc = new Calculator(mh);
+  calc = new Calculator(mh, ex);
   
-  reset = new Button(mh).setPos(new PVector(20,-20), new PVector(40,20)).setRadius(2).setColor(#06BA63).autoHighlight().setText("Reset").setFunction(new MethodRelay(this, "reset"));
-  eval = new Button(mh).setPos(new PVector(20,-40), new PVector(40,20)).setRadius(2).setColor(#06BA63).autoHighlight().setText("Eval").setFunction(new MethodRelay(calc.ex, "evaluate"));
-  
-  
-
+  mode = new Button(mh).setPos(new PVector(-20,-width/4), new PVector(40,20)).setRadius(2).setColor(#8B687F).autoHighlight().setText("Mode").setFunction(new MethodRelay(this, "changeMode"));
 }
 
 void draw(){
@@ -28,15 +30,14 @@ void draw(){
   mh.frameUpdate(offset, scale);
   stroke(0);
   strokeWeight(1);
-  crossMark();
+  //crossMark();
   translate(offset.x,offset.y);
   scale(scale);
   
   if(calc != null) calc.display();
-  reset.display();
-  eval.display();
-  
-  
+  if(clock != null) clock.display();
+  if(changeTime != null) changeTime.display();
+  mode.display();
 }
 
 void mouseClicked(){
@@ -55,11 +56,15 @@ void call(String _call){
 
 void changeMode(){
   if(calc == null){
-    calc = new Calculator(mh);
-    eval.setFunction(new MethodRelay(calc.ex, "evaluate"));
+    clock = null;
+    changeTime = null;
+    calc = new Calculator(mh, ex);
     return;
   }
   calc = null;
+  clock = new Clock(time).setPos(new PVector(30,0));
+  changeTime = new Button(mh).setPos(new PVector(-40,-width/4 + 30), new PVector(80,20)).setRadius(2).setColor(#B096A7).autoHighlight().setText("Change Time").setFunction(new MethodRelay(clock, "setTime", Time48.class));
+  changeTime.setData(new Time48(12,0,0));
   Runtime.getRuntime().gc();
 }
 

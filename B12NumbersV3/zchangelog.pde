@@ -3,7 +3,7 @@
     Beta version of a clock in base 12.
     by Nayan Sawyer
     started Mar 2022
-    version 0.1.5.6 April 30 2022
+    version 0.1.5.7 April 30 2022
     
     Characters are a variation of Kaktovik Inupiaq numerals
     reversed and in base 12 instead of 20. I take no credit 
@@ -11,10 +11,13 @@
     Includes method relay code be Quark - see https://forum.processing.org/two/discussion/13093/how-to-call-function-by-string-content.html
     for more details.
     
-    // TODO add actual math evaluation to B12Expression
-    // TODO finalize calculator design
+    // TODO add actual math evaluation to B12Expression // Once thiss is done we hit version 0.2.0.0 //
+    // TODO add throwing exceptions to all contructors
     // MAYBE start clock widget structure
     // MAYBE add additional operations like power, log, and trig functions
+    
+    changelog 0.1.5.7
+    - Presentation display setup done.
     
     changelog 0.1.5.6
     - MathPad complete. Changed internal button mouseOver code

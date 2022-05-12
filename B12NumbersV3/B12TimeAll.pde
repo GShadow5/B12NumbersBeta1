@@ -6,7 +6,7 @@ class Time48 extends Thread{
   private boolean initialized;
   
    // CONSTRUCTORS //
-   // TODO add exceptions to all contructors
+   // TODO add throwing exceptions to all contructors
   Time48(){
     sec48 = 0;
     min48 = 0;

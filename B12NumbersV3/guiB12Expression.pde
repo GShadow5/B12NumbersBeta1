@@ -35,22 +35,25 @@ class B12Expression {
   }
   
   void evaluate(){
-    //db println("evaluate"); //<>//
+    String evalString = parseDigits();
+    println(evalString);
+     //<>// //<>//
+  }
+  
+  private String parseDigits(){
     String valid = "+*-/"; // valid characters to accept
     String evalString = ""; // gets filled with the expression up for evaluation in base 10
     B12Digit[] cnum = new B12Digit[0]; // used to sum numbers as the array is parsed
     boolean cfs = false; // float status of currently building number
-    //int count = 0; // counts what column we're at for multiplying base 12 to base 10
     
     
     // Parse expression[] into a base 10 string that can be evaluated mathematically
     if(!(expression[expression.length - 1].isNum() || expression[expression.length -1].getValue() == ')' )){throw new IllegalArgumentException("Invalid input");} // check that final character is a number
-    //db println("final char is valid");
     for (int c = expression.length; c >= 0; c--){
-      //db println("top of for loop " + c);
+
       int i = c - 1;
       
-      if (i == -1){ // At the end, add the final number if neccessary //<>//
+      if (i == -1){ // At the end, add the final number if neccessary
         // add number to string if present
         if(cnum.length != 0 && cfs == false){
           B12Int num = (B12Int)convert(cnum,cfs);
@@ -65,15 +68,13 @@ class B12Expression {
         }
         break;
       }
-      //db println("passed finish clause loop " + c);
+      
       // If there is no number currently being built and the current character is a number start building a new number
       if (expression[i].isNum() && cnum.length == 0){ 
-        //count = 0;
         cnum = (B12Digit[])append(cnum,expression[i]);
       }
       // If the current character is a number and there IS a number currently being built add the character into the number
       else if (expression[i].isNum() && cnum.length != 0){
-        //count += 1;
         cnum = (B12Digit[])append(cnum,expression[i]);
       }
       else if (expression[i].value == '.' && cnum.length != 0){
@@ -83,8 +84,6 @@ class B12Expression {
       }
       // If any other valid character just add it to the string after making sure to add the last built number if it exists
       else if (inStr(valid,char(expression[i].value))){
-        // reset number digit multiplier count
-        //count = 0; 
         
         // add number to string if present
         if(cnum.length != 0 && cfs == false){
@@ -104,17 +103,19 @@ class B12Expression {
       }
       // In all other cases fail
       else{
-        //db println("throwing exception");
         throw new IllegalArgumentException("Invalid input");
       }
     }
     
-    println(evalString);
+    return(evalString);
   }
+  
+  
+  
+  // HELPER FUNCTIONS //
   private Number convert(B12Digit[] cnum, boolean isFloat){
     if(!isFloat){
       int out = 0;
-      //cnum = (B12Digit[])reverse(cnum);
       for(int i = 0; i < cnum.length; i++){
         out += cnum[i].getValue() * pow(12,i);
       }
@@ -139,7 +140,6 @@ class B12Expression {
     return new B12Float(out);
   }
   
-  // HELPER FUNCTIONS //
   boolean inStr(String st, char _c){
     try{
       int x = st.indexOf(_c);
