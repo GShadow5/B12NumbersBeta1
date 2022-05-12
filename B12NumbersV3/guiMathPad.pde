@@ -8,7 +8,7 @@ class MathPad{
     ex = _ex;
     mh = _mh;
     pos = new PVector(0,0);
-    buttons = new B12Button[12];
+    buttons = new Button[12];
     initialize();
   }
   
@@ -31,6 +31,9 @@ class MathPad{
     buttons = (Button[])append(buttons, new B12Button(mh, new B12Digit('*')).setPos(new PVector(pos.x + 22*4,pos.y)).setFunction(new MethodRelay(this, "addChar", B12Digit.class)).setColor(220,150));
     buttons = (Button[])append(buttons, new B12Button(mh, new B12Digit('/')).setPos(new PVector(pos.x + 22*4,pos.y + 22)).setFunction(new MethodRelay(this, "addChar", B12Digit.class)).setColor(220,150));
     buttons = (Button[])append(buttons, new B12Button(mh, new B12Digit('.')).setPos(new PVector(pos.x + 22*4,pos.y + 22*2)).setFunction(new MethodRelay(this, "addChar", B12Digit.class)).setColor(220,150));
+    buttons = (Button[])append(buttons, new Button(mh).setText("Enter").setPos(new PVector(pos.x + 22*4,pos.y + 22*3)).setDim(new PVector(42,20)).setFunction(new MethodRelay(this.ex, "evaluate")).setColor(220,150)); //<>//
+    buttons = (Button[])append(buttons, new Button(mh).setText("Cl").setPos(new PVector(pos.x + 22*5,pos.y + 22)).setDim(new PVector(20,42)).setFunction(new MethodRelay(this.ex, "clear")).setColor(220,150));
+    buttons = (Button[])append(buttons, new Button(mh).setText("Del").setPos(new PVector(pos.x + 22*5,pos.y)).setDim(new PVector(20,20)).setFunction(new MethodRelay(this.ex, "delete")).setColor(220,150));
   }
 
   // DONE send characters to display

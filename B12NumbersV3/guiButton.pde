@@ -9,6 +9,9 @@ class Button{
   private color col; // Stores static color
   private color highlight; // Stores mouseover color
   private String text;
+  private float textSize;
+  private color textColor;
+  private int renderPriority; // 0: default, render text size within button size  1: render button around text
   
   private MethodRelay function; // Gets called when button is pressed
   private boolean mouseOver;
@@ -25,6 +28,9 @@ class Button{
     colorMode(HSB);
     highlight = color(150);
     text = "";
+    textSize = dim.y * 0.8;
+    textColor = 0;
+    renderPriority = 0;
     
     mouseOver = false;
     listener = new LiveMethodRelay(this, "clicked", 'p', Object.class);
@@ -38,8 +44,10 @@ class Button{
   color getColor(){return col;}
   color getHighlight(){return highlight;}
   String getText(){return text;}
+  color getTextColor(){return textColor;}
   MethodRelay getFunction(){return function;}
   int getMode(){return mode; }
+  int getRenderPriority(){return renderPriority;}
   
   // SETTERS //
   Button setPos(PVector _pos){pos = _pos.copy(); return this;}
@@ -52,6 +60,9 @@ class Button{
   Button autoHighlight(){ colorMode(RGB,255); highlight = color(int(red(col) * .85), int(green(col) * .85), int(blue(col) * .85)); return this; }
   Button setHighlight(color h){ highlight = h; return this; }
   Button setText(String t){text = t; return this;}
+  Button setTextSize(float s){textSize = s; return this;} // TODO make robust
+  Button setTextColor(color c){textColor = c; return this;}
+  Button setRenderPriority(int p){if(p < 0 || p > 1) throw new IllegalArgumentException(); renderPriority = p; return this;}
   
   Button setFunction(MethodRelay _function){function = _function; return this;}
   Button setData(Object... _data){ data = _data; return this;} // Data to pass for button presses. Ugh, note that the array already exists because it's passed as such, no need to create a new one. Stupid bug
@@ -59,13 +70,21 @@ class Button{
   
   // DISPLAY //
   void display(){
+    mouseOver(mh.sMouseX(),mh.sMouseY());
     noStroke();
     rectMode(mode);
-    new MethodRelay(this, "mouseOver" + str(mode), float.class, float.class).execute(mh.sMouseX(),mh.sMouseY());
     fill(mouseOver ? highlight : col);
     rect(pos.x,pos.y,dim.x,dim.y,radius);
-    fill(0);
-    textSize(dim.y * 0.8);
+    
+    //stroke(textColor); fix this
+    textSize(textSize);
+    if(renderPriority == 0){
+      while(textWidth(text) > dim.x * 0.95){ // WARNING! NOT ROBUST make this a function at some point to allow other rectModes to render properly
+        textSize = textSize - 1;
+        textSize(textSize);
+      }
+    }
+    //textSize(dim.y * 0.8);
     textAlign(CENTER,BOTTOM);
     text(text,pos.x + dim.x/2,pos.y + dim.y);
   }
@@ -81,33 +100,27 @@ class Button{
   }
   
   // DETECT IF MOUSE IS OVER BUTTON //
-  // The numbers in the method name correspond to the mode ids because the method gets called with a relay
-  void mouseOver0(float x, float y){ // CORNER
-    mouseOver = !(x < pos.x || x > pos.x + dim.x || y < pos.y || y > dim.y + pos.y) ;
-  }
-  
-  void mouseOver1(float x, float y){ // CORNERS
-    //println("CORNERS");
-    mouseOver = !(x < (pos.x > dim.x ? dim.x : pos.x) || 
-                  x > (pos.x > dim.x ? pos.x : dim.x) || 
-                  y < (pos.y > dim.y ? dim.y : pos.y) || 
-                  y > (pos.y > dim.y ? pos.y : dim.y));
-  }
-  
-  void mouseOver2(float x, float y){ // RADIUS
-    //println("RADIUS");
-    mouseOver = !(x < pos.x - dim.x || 
-                  x > pos.x + dim.x || 
-                  y < pos.x - dim.y || 
-                  y > pos.x + dim.y);
-  }
-  
-  void mouseOver3(float x, float y){ // CENTER
-    //println("CENTER");
-    mouseOver = !(x < pos.x - dim.x/2 || 
-                  x > pos.x + dim.x/2 || 
-                  y < pos.x - dim.y/2 || 
-                  y > pos.y + dim.y/2);
+  // Must account for rect render mode
+  void mouseOver(float x, float y){ // CORNER
+    switch(mode){
+      case 0:
+        mouseOver = !(x < pos.x || x > pos.x + dim.x || y < pos.y || y > dim.y + pos.y); break;
+      case 1:
+        mouseOver = !(x < (pos.x > dim.x ? dim.x : pos.x) || 
+                      x > (pos.x > dim.x ? pos.x : dim.x) || 
+                      y < (pos.y > dim.y ? dim.y : pos.y) || 
+                      y > (pos.y > dim.y ? pos.y : dim.y)); break;
+      case 2:
+        mouseOver = !(x < pos.x - dim.x || 
+                      x > pos.x + dim.x || 
+                      y < pos.x - dim.y || 
+                      y > pos.x + dim.y); break;
+      case 3:
+        mouseOver = !(x < pos.x - dim.x/2 || 
+                      x > pos.x + dim.x/2 || 
+                      y < pos.x - dim.y/2 || 
+                      y > pos.y + dim.y/2); break;
+    }
   }
   
   // GARBAGE COLLECTION //

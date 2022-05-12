@@ -5,9 +5,11 @@ class B12Expression {
     expression = new B12Digit[0];
   }
   
+  // GETTERS //
   B12Digit getDigit(int index){ return expression[index]; }
   int length(){return expression.length;}
   
+  // SETTERS //
   B12Expression insertChar(int ind, B12Digit _digit){
     expression = (B12Digit[])append(expression, _digit); // Add the new digit
     if(ind < expression.length - 1){ // Swap new digit
@@ -18,14 +20,18 @@ class B12Expression {
     }
     return this;
   }
-  
   B12Expression addChar(B12Digit _digit){
     expression = (B12Digit[])append(expression, _digit);
     return this;
   }
+  B12Expression delete(){
+    expression = (B12Digit[])shorten(expression);
+    return this;
+  }
   
-  void clear(){
+  B12Expression clear(){
     expression = new B12Digit[0];
+    return this;
   }
   
   void evaluate(){
