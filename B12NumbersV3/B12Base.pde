@@ -210,7 +210,8 @@ class B12Int implements Number {
 
 
 class B12Float implements Number{
-  private ArrayList<B12Digit> digits;
+  //private ArrayList<B12Digit> digits;
+  private B12Digit[] digits;
   private float value;
   private PVector pos;
   private boolean arrayLoaded;
@@ -232,7 +233,20 @@ class B12Float implements Number{
   PVector getPos(){ return pos; }
   int getPlaces(){ return places; }
   B12Int toInt(){return new B12Int(int(value));}
-  
+  B12Digit[] getDigits(){  //<>//
+    loadArray(); 
+    B12Digit[] out = (B12Digit[])reverse(digits);
+    for(int i = out.length-1; i > 0; i--){
+      if(out[i].getValue() == '.'){
+        out = (B12Digit[])shorten(out);
+        break;
+      }
+      if(out[i].getValue() == 0){
+        out = (B12Digit[])shorten(out);
+      }
+    }
+    return out;
+  }
   
   B12Float setValue(float _value){ value = _value; arrayLoaded = false; return this;}
   B12Float setPos(PVector _pos){ pos = _pos.copy(); inPosition = false;return this; }
@@ -256,8 +270,8 @@ class B12Float implements Number{
     if(!inPosition){ positionDigits(); }
     pushMatrix();
     translate(pos.x,pos.y);
-    for(int i = 0; i < digits.size(); i++){
-      digits.get(i).display();
+    for(int i = 0; i < digits.length; i++){
+      digits[i].display();
     }
     popMatrix();
   }
@@ -268,38 +282,38 @@ class B12Float implements Number{
     if(mode == LEFT){
       for(int i = 0; i < pointPlace; i++){
         curPos += -12;
-        digits.get(i).setRefPos(curPos, 0);
+        digits[i].setRefPos(curPos, 0);
         count++;
       }
       
       curPos += -8;
-      digits.get(count).setRefPos(curPos, 0);
+      digits[count].setRefPos(curPos, 0);
       count++;
       curPos += -6;
-      digits.get(count).setRefPos(curPos, 0);
+      digits[count].setRefPos(curPos, 0);
       count++;
       
-      for(int i = count; i < digits.size(); i++){
+      for(int i = count; i < digits.length; i++){
         curPos += -12;
-        digits.get(i).setRefPos(curPos, 0);
+        digits[i].setRefPos(curPos, 0);
       }
     }else if(mode == DECIMAL){
       curPos = -5;
-      digits.get(pointPlace).setRefPos(curPos,0);
+      digits[pointPlace].setRefPos(curPos,0);
       curPos += -2;
       for(int i = pointPlace - 1; i >= 0; i--){
         curPos += 12;
-        digits.get(i).setRefPos(curPos,0);
+        digits[i].setRefPos(curPos,0);
       }
       curPos = -2;
       
-      for(int i = pointPlace + 1; i < digits.size(); i++){
+      for(int i = pointPlace + 1; i < digits.length; i++){
         curPos += -12;
-        digits.get(i).setRefPos(curPos,0);
+        digits[i].setRefPos(curPos,0);
       }
     }else if(mode == RIGHT){
-      for(int i = digits.size() - 1; i >= 0; i--){
-        digits.get(count).setRefPos((12 * i) + 3, 0);
+      for(int i = digits.length - 1; i >= 0; i--){
+        digits[count].setRefPos((12 * i) + 3, 0);
         count++;
       }
     }
@@ -307,7 +321,8 @@ class B12Float implements Number{
   }
   
   private void loadArray(){
-    digits = new ArrayList<B12Digit>();
+    //digits = new ArrayList<B12Digit>();
+    digits = new B12Digit[0];
     B12Digit[] temp = new B12Digit[places];
     float mval = abs(value);
     int whole = int(mval);
@@ -320,24 +335,24 @@ class B12Float implements Number{
     }
     
     for(int i = places - 1; i >= 0; i--){
-      digits.add(temp[i]);
+      digits = (B12Digit[])append(digits,temp[i]);
     }
     
-    pointPlace = digits.size();
-    digits.add(new B12Digit('.'));
+    pointPlace = digits.length;
+    digits = (B12Digit[])append(digits,new B12Digit('.'));
     
     while(whole > 0){
       if(whole < 12){
-        digits.add(new B12Digit(whole));
+        digits = (B12Digit[])append(digits,new B12Digit(whole));
         whole = 0;
       }else{
-        digits.add(new B12Digit(whole % 12));
+        digits = (B12Digit[])append(digits,new B12Digit(whole % 12));
         whole /= 12;
       }
     }
     
     if(value < 0){
-      digits.add(new B12Digit('-'));
+      digits = (B12Digit[])append(digits,new B12Digit('-'));
     }
     
     arrayLoaded = true;

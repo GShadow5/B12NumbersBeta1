@@ -7,7 +7,7 @@ class B12Expression {
   
   // GETTERS //
   B12Digit getDigit(int index){ return expression[index]; }
-  int length(){return expression.length;}
+  int length(){if(expression == null){return 0;} return expression.length;}
   
   // SETTERS //
   B12Expression insertChar(int ind, B12Digit _digit){
@@ -35,10 +35,11 @@ class B12Expression {
   }
   
   void evaluate(){
-    String evalString = parseDigits();
-    println(evalString);
-    dbout = evalString;
-     //<>// //<>//
+    String evalString = parseDigits(); //<>//
+    Expression exp = new ExpressionBuilder(evalString).build();
+    expression = new B12Float((float)exp.evaluate()).setPlaces(12).getDigits();
+    println(exp.evaluate());
+    dbout = str((float)exp.evaluate());
   }
   
   private String parseDigits(){

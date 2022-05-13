@@ -1,6 +1,8 @@
+import net.objecthunter.exp4j.*;
+
 // B12NumbersV3 //
 String dbout = new String("");
-float scale = 2;
+float scale = 4;
 PVector offset;
 public static final int DECIMAL = 65;
 MouseHandler mh; // Mouse event handler
@@ -15,7 +17,7 @@ STime48 time;
 
 
 void setup(){
-  size(400,400);
+  size(800,800);
   offset = new PVector(width/2, height/2);
   time = new STime48();
   mh = new MouseHandler(new MouseData(offset, scale));
@@ -23,13 +25,13 @@ void setup(){
   
   calc = new Calculator(mh, ex);
   
-  mode = new Button(mh).setPos(new PVector(-20,-width/4), new PVector(40,20)).setRadius(2).setColor(#8B687F).autoHighlight().setText("Mode").setFunction(new MethodRelay(this, "changeMode"));
+  mode = new Button(mh).setPos(new PVector(-20,-100), new PVector(40,20)).setRadius(2).setColor(#8B687F).autoHighlight().setText("Mode").setFunction(new MethodRelay(this, "changeMode"));
 }
 
 void draw(){
-  textAlign(LEFT,TOP);
-  
   background(196);
+  textAlign(LEFT,TOP);
+  textSize(30);
   text(dbout,0,0); 
   mh.frameUpdate(offset, scale);
   stroke(0);
@@ -68,7 +70,7 @@ void changeMode(){
   }
   calc = null;
   clock = new Clock(time).setPos(new PVector(30,0));
-  changeTime = new Button(mh).setPos(new PVector(-40,-width/4 + 30), new PVector(80,20)).setRadius(2).setColor(#B096A7).autoHighlight().setText("Change Time").setFunction(new MethodRelay(clock, "setTime", Time48.class));
+  changeTime = new Button(mh).setPos(new PVector(-40,-60), new PVector(80,20)).setRadius(2).setColor(#B096A7).autoHighlight().setText("Change Time").setFunction(new MethodRelay(clock, "setTime", Time48.class));
   changeTime.setData(new Time48(12,0,0));
   Runtime.getRuntime().gc();
 }

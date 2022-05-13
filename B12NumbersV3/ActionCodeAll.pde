@@ -110,7 +110,7 @@ import java.lang.ref.*;
 public static class MethodRelay {
 
   /** The object to handle the draw event */
-  private WeakReference reference = null;
+  private WeakReference reference = null; // Replaced the original strong reference with a weak reference so that relays will get garbage collected if the object they call get collected
   //private Object handlerObject = null;
   /** The method in drawHandlerObject to execute */
   private Method handlerMethod = null;
