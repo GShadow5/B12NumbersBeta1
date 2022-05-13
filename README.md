@@ -12,3 +12,5 @@ The time system is now complete with robust syncing and offset features. The bas
     Seconds: there are now 48 seconds in a minute
 
 The number system is such that horizontal ticks on top represent multiples of four, and vertical ticks represent multiples of one. Decimal 11 is 2 horizontal ticks, and 3 vertical ticks. However, since the project is in an alpha state, I will not go into great detail at this point.
+
+The calculator input system is now working. For an early beta demo see [releases](https://github.com/GShadow5/B12NumbersBeta1/releases)
