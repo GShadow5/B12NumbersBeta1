@@ -9,7 +9,10 @@ MouseHandler mh; // Mouse event handler
 
 B12Expression ex;
 Calculator calc;
+
+//ClockApp ca;
 Clock clock;
+
 Button mode;
 Button changeTime;
 STime48 time;
@@ -17,12 +20,14 @@ STime48 time;
 
 
 void setup(){
-  size(800,800);
+  size(800,800); //<>//
   offset = new PVector(width/2, height/2);
   time = new STime48();
   mh = new MouseHandler(new MouseData(offset, scale));
   ex = new B12Expression();
   
+  //ca = new ClockApp(mh, time).setPos(-43,0);
+  clock = new Clock(mh, time);
   calc = new Calculator(mh, ex);
   
   mode = new Button(mh).setPos(new PVector(-20,-100), new PVector(40,20)).setRadius(2).setColor(#8B687F).autoHighlight().setText("Mode").setFunction(new MethodRelay(this, "changeMode"));
@@ -36,14 +41,16 @@ void draw(){
   mh.frameUpdate(offset, scale);
   stroke(0);
   strokeWeight(1);
-  //crossMark();
+  crossMark();
   translate(offset.x,offset.y);
   scale(scale);
   
-  if(calc != null) calc.display();
-  if(clock != null) clock.display();
-  if(changeTime != null) changeTime.display();
-  mode.display();
+  //if(calc != null) calc.display();
+  //if(clock != null) clock.display();
+  //if(changeTime != null) changeTime.display();
+  //mode.display();
+  
+  clock.display();
   
 }
 
@@ -63,14 +70,14 @@ void call(String _call){
 
 void changeMode(){
   if(calc == null){
-    clock = null;
+    //clock = null;
     changeTime = null;
     calc = new Calculator(mh, ex);
     return;
   }
   calc = null;
-  clock = new Clock(time).setPos(new PVector(30,0));
-  changeTime = new Button(mh).setPos(new PVector(-40,-60), new PVector(80,20)).setRadius(2).setColor(#B096A7).autoHighlight().setText("Change Time").setFunction(new MethodRelay(clock, "setTime", Time48.class));
+  //clock = new Clock(time).setPos(new PVector(30,0));
+  //changeTime = new Button(mh).setPos(new PVector(-40,-60), new PVector(80,20)).setRadius(2).setColor(#B096A7).autoHighlight().setText("Change Time").setFunction(new MethodRelay(clock, "setTime", Time48.class));
   changeTime.setData(new Time48(12,0,0));
   Runtime.getRuntime().gc();
 }

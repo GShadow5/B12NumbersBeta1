@@ -96,6 +96,7 @@ class Button{
     if(mouseOver && mouseButton == LEFT){
       //println("clicked" + this);
       function.execute(data);
+      mouseOver = false; // Very important. Without this a button retains its mouseOver status forever if it stops being displayed
     }
   }
   

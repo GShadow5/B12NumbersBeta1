@@ -24,8 +24,8 @@ class B12Digit implements Number{
   }
   
   // SETTERS
-  B12Digit setRefPos(PVector _refPos){ refPos = _refPos; return this;}
-  B12Digit setRefPos(float _x, float _y){ refPos = new PVector(_x,_y); return this;}
+  B12Digit setPos(PVector _refPos){ refPos = _refPos; return this;}
+  B12Digit setPos(float _x, float _y){ refPos = new PVector(_x,_y); return this;}
   B12Digit setValue(int _value){ value = byte(_value); return this;}
   
   // GETTERS
@@ -123,7 +123,7 @@ class B12Digit implements Number{
 
 
 class B12Int implements Number {
-  private ArrayList<B12Digit> digits;
+  private B12Digit[] digits;
   private int value;
   private PVector pos;
   private boolean arrayLoaded;
@@ -144,6 +144,11 @@ class B12Int implements Number {
   int getValue(){ return value; }
   PVector getPos(){ return pos; }
   B12Float toFloat(){return new B12Float(float(value)); }
+  B12Digit[] getDigits(){ 
+    loadArray();  //<>//
+    B12Digit[] out = digits;
+    return out;
+  }
   
   // SETTERS //
   B12Int setValue(int _value){ value = _value; arrayLoaded = false; return this;}
@@ -161,21 +166,21 @@ class B12Int implements Number {
     if(!inPosition){ positionDigits(); }
     pushMatrix();
     translate(pos.x,pos.y);
-    for(int i = 0; i < digits.size(); i++){
-      digits.get(i).display();
+    for(int i = 0; i < digits.length; i++){
+      digits[i].display();
     }
     popMatrix();
   }
   
   private void positionDigits(){
     if(mode == LEFT || mode == DECIMAL){
-      for(int i = 0; i < digits.size(); i++){
-        digits.get(i).setRefPos((-12 * (i+1)), 0);
+      for(int i = 0; i < digits.length; i++){
+        digits[i].setPos((-12 * (i+1)), 0);
       }
     }else if(mode == RIGHT){
       int count = 0;
-      for(int i = digits.size() - 1; i >= 0; i--){
-        digits.get(count).setRefPos((12 * i) + 3, 0);
+      for(int i = digits.length - 1; i >= 0; i--){
+        digits[count].setPos((12 * i) + 3, 0);
         count++;
       }
     }
@@ -183,23 +188,23 @@ class B12Int implements Number {
   }
   
   private void loadArray(){
-    digits = new ArrayList<B12Digit>();
+    digits = new B12Digit[0];
     int mval = abs(value);
-    if(mval == 0){ digits.add(new B12Digit(0)); }
+    if(mval == 0){ digits = (B12Digit[])append(digits, new B12Digit(0)); }
     while(mval != 0){
       if(mval < 12){
-        digits.add(new B12Digit(mval));
+        digits = (B12Digit[])append(digits, new B12Digit(mval));
         mval = 0;
       }else{
-        digits.add(new B12Digit(mval % 12));
+        digits = (B12Digit[])append(digits, new B12Digit(mval % 12));
         mval /= 12;
       }
     }
-    if(digits.size() < minLen){
-      digits.add(new B12Digit(0));
+    if(digits.length < minLen){
+      digits = (B12Digit[])append(digits, new B12Digit(0));
     }
     if(value < 0){
-      digits.add(new B12Digit('-'));
+      digits = (B12Digit[])append(digits, new B12Digit('-'));
     }
     
     arrayLoaded = true;
@@ -210,7 +215,6 @@ class B12Int implements Number {
 
 
 class B12Float implements Number{
-  //private ArrayList<B12Digit> digits;
   private B12Digit[] digits;
   private float value;
   private PVector pos;
@@ -282,38 +286,38 @@ class B12Float implements Number{
     if(mode == LEFT){
       for(int i = 0; i < pointPlace; i++){
         curPos += -12;
-        digits[i].setRefPos(curPos, 0);
+        digits[i].setPos(curPos, 0);
         count++;
       }
       
       curPos += -8;
-      digits[count].setRefPos(curPos, 0);
+      digits[count].setPos(curPos, 0);
       count++;
       curPos += -6;
-      digits[count].setRefPos(curPos, 0);
+      digits[count].setPos(curPos, 0);
       count++;
       
       for(int i = count; i < digits.length; i++){
         curPos += -12;
-        digits[i].setRefPos(curPos, 0);
+        digits[i].setPos(curPos, 0);
       }
     }else if(mode == DECIMAL){
       curPos = -5;
-      digits[pointPlace].setRefPos(curPos,0);
+      digits[pointPlace].setPos(curPos,0);
       curPos += -2;
       for(int i = pointPlace - 1; i >= 0; i--){
         curPos += 12;
-        digits[i].setRefPos(curPos,0);
+        digits[i].setPos(curPos,0);
       }
       curPos = -2;
       
       for(int i = pointPlace + 1; i < digits.length; i++){
         curPos += -12;
-        digits[i].setRefPos(curPos,0);
+        digits[i].setPos(curPos,0);
       }
     }else if(mode == RIGHT){
       for(int i = digits.length - 1; i >= 0; i--){
-        digits[count].setRefPos((12 * i) + 3, 0);
+        digits[count].setPos((12 * i) + 3, 0);
         count++;
       }
     }
