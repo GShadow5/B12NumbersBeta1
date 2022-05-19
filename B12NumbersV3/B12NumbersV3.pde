@@ -27,7 +27,7 @@ void setup(){
   ex = new B12Expression();
   
   //ca = new ClockApp(mh, time).setPos(-43,0);
-  clock = new Clock(mh, time);
+  clock = new Clock(mh, time);//.setPos(40,20);
   calc = new Calculator(mh, ex);
   
   mode = new Button(mh).setPos(new PVector(-20,-100), new PVector(40,20)).setRadius(2).setColor(#8B687F).autoHighlight().setText("Mode").setFunction(new MethodRelay(this, "changeMode"));
@@ -51,6 +51,7 @@ void draw(){
   //mode.display();
   
   clock.display();
+  //point(-15,0);
   
 }
 
@@ -84,6 +85,10 @@ void changeMode(){
 
 void reset(){
   calc.ex.clear();
+}
+
+void test(){
+  background(255,0,0);
 }
 
 void crossMark(){

@@ -145,7 +145,7 @@ class B12Int implements Number {
   PVector getPos(){ return pos; }
   B12Float toFloat(){return new B12Float(float(value)); }
   B12Digit[] getDigits(){ 
-    loadArray();  //<>//
+    loadArray(); 
     B12Digit[] out = digits;
     return out;
   }

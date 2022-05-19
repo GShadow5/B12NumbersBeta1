@@ -57,8 +57,9 @@ class TimeDisplay {
     digits = (B12Digit[])append(digits,new B12Digit(':'));
     digits = (B12Digit[])concat(digits,hours.getDigits());
     
+    // Position
     for(int i = 0; i < digits.length; i++){
-      digits[i].setPos(i*-13 + pos.x,pos.y).display();
+      digits[i].setPos(i*-13 + pos.x - 13,pos.y).display();
     }
 
     // Position
