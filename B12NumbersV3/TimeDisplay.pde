@@ -6,6 +6,7 @@ class TimeDisplay {
   B12Int seconds;
   B12Digit[] digits;
   int tmillis;
+  color col;
 
   TimeDisplay(Time48 _t48) {
     pos = new PVector(0, 0);
@@ -23,8 +24,10 @@ class TimeDisplay {
   // GETTERS and SETTERS //
   PVector getPos() { return pos; }
   Time48 getTime(){return t48;}
+  color getCol(){return col;}
   TimeDisplay setPos(PVector _pos) { pos = _pos.copy(); return this;}
   TimeDisplay setPos(float _x, float _y) { pos = new PVector(_x, _y);return this;}
+  TimeDisplay setCol(color _col){col = _col; return this;}
 
   TimeDisplay setTime(Time48 _time) {
     if(_time.getClass() == STime48.class){
@@ -57,9 +60,10 @@ class TimeDisplay {
     digits = (B12Digit[])append(digits,new B12Digit(':'));
     digits = (B12Digit[])concat(digits,hours.getDigits());
     
+    
     // Position
     for(int i = 0; i < digits.length; i++){
-      digits[i].setPos(i*-13 + pos.x - 13,pos.y).display();
+      digits[i].setPos(i*-13 + pos.x - 13,pos.y).setCol(col).display();
     }
 
     // Position

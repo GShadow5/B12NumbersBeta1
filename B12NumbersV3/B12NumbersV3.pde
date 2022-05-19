@@ -12,6 +12,8 @@ Calculator calc;
 
 //ClockApp ca;
 Clock clock;
+Timer timer;
+Stopwatch st;
 
 Button mode;
 Button changeTime;
@@ -28,6 +30,8 @@ void setup(){
   
   //ca = new ClockApp(mh, time).setPos(-43,0);
   clock = new Clock(mh, time);//.setPos(40,20);
+  timer = new Timer(mh);
+  st = new Stopwatch(mh);
   calc = new Calculator(mh, ex);
   
   mode = new Button(mh).setPos(new PVector(-20,-100), new PVector(40,20)).setRadius(2).setColor(#8B687F).autoHighlight().setText("Mode").setFunction(new MethodRelay(this, "changeMode"));
@@ -50,7 +54,8 @@ void draw(){
   //if(changeTime != null) changeTime.display();
   //mode.display();
   
-  clock.display();
+  //clock.display();
+  st.display();
   //point(-15,0);
   
 }

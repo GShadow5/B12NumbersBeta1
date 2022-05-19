@@ -7,6 +7,7 @@ abstract interface Number{
 class B12Digit implements Number{
   private byte value;
   private PVector refPos;
+  private color col;
   
   B12Digit(int _value){
     if(_value >= 12 || _value < 0){ 
@@ -14,6 +15,7 @@ class B12Digit implements Number{
     }
     value = byte(_value);
     refPos = new PVector(0,0);
+    col = 0;
   }
   
   B12Digit(char _c){
@@ -21,17 +23,20 @@ class B12Digit implements Number{
     if(!inStr(valid, _c)){ throw new IllegalArgumentException("B12Char only accepts \'+ - * / . :'"); }
     value = byte(_c);
     refPos = new PVector(0,0);
+    col = 0;
   }
   
   // SETTERS
   B12Digit setPos(PVector _refPos){ refPos = _refPos; return this;}
   B12Digit setPos(float _x, float _y){ refPos = new PVector(_x,_y); return this;}
   B12Digit setValue(int _value){ value = byte(_value); return this;}
+  B12Digit setCol(color _col){col = _col; return this;}
   
   // GETTERS
   PVector getPos(){ return refPos; }
   int getValue(){ return value; }
   boolean isNum(){return value >= 0 && value < 12; }
+  color getCol(){return col;}
   
   // RENDER CHARACTERS
   void display(){
@@ -39,7 +44,7 @@ class B12Digit implements Number{
     translate(refPos.x,refPos.y);
     strokeWeight(1);
     noFill();
-    stroke(1);
+    stroke(col);
     ellipseMode(CORNERS);
     switch(value) {
       // NUMBERS //
