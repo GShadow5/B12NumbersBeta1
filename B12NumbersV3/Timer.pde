@@ -6,14 +6,18 @@ class Timer{
   boolean setTime;
   int cursorPos;
   STime48 time;
+  Time48 target;
   TimeDisplay td;
+  boolean running;
   
   Timer(MouseHandler _mh){
     pos = new PVector(0,0);
     mh = _mh;
     time = new STime48().setTime(new Time48(0));;
-    td = new TimeDisplay(time);
-    setTime = false;
+    target = new Time48(0);
+    td = new TimeDisplay(new Time48(0));
+    setTime = true;
+    running = false;
     cursorPos = 0;
     initialize();
   }
@@ -37,7 +41,7 @@ class Timer{
       buttons = (Button[])append(buttons, new B12Button(mh ,new B12Digit(i)).setPos(bPos).setDim(new PVector(20,20)).setFunction(new MethodRelay(this, "addChar", B12Digit.class)).setColor(220,150));
     }
     // Create other buttons
-    buttons = (Button[])append(buttons, new Button(mh).setText("Set").setPos(new PVector(pos.x - 43,pos.y + 22*3 + 2)).setDim(new PVector(27,20)).setFunction(new MethodRelay(this, "lockTime")).setColor(220,150));
+    buttons = (Button[])append(buttons, new Button(mh).setText("Start").setPos(new PVector(pos.x - 43,pos.y + 22*3 + 2)).setDim(new PVector(27,20)).setFunction(new MethodRelay(this, "lockTime")).setColor(220,150));
     buttons = (Button[])append(buttons, new Button(mh).setText("Clear").setPos(new PVector(pos.x + 29 - 43,pos.y + 22*3 + 2)).setDim(new PVector(28,20)).setFunction(new MethodRelay(this, "clearTime")).setColor(220,150));
     buttons = (Button[])append(buttons, new Button(mh).setText("Cancel").setPos(new PVector(pos.x + 59 - 43,pos.y + 22*3 + 2)).setDim(new PVector(27,20)).setFunction(new MethodRelay(this, "cancelSetTime")).setColor(220,150));
     
@@ -68,21 +72,25 @@ class Timer{
   }
   
   void lockTime(){
-    time.setTime(td.getTime());
-    td.setTime(time);
+    target = new Time48(td.getTime());
+    time.setTime(new Time48(0));
+    td.setTime(new Time48().setTsec(target.tsec() - time.tsec()));
     cursorPos = 0;
     setTime = false;
+    running = true;
   }
   
   void triggerSetTime(){
     clearTime();
     setTime = true;
+    running = false;
   }
   
   void cancelSetTime(){
-    td.setTime(time);
+    //td.setTime(time);
     cursorPos = 0;
     setTime = false;
+    running = true;
   }
   
   void display(){
@@ -95,6 +103,18 @@ class Timer{
     }else{
       setTimeButton.display();
     }
+    if(running == true){
+      td.setTime(new Time48().setTsec(target.tsec() - time.tsec()));
+    }
     td.display();
+    if(td.getTime().tsec() < 0){
+      fill(255,0,0);
+      rectMode(CORNERS);
+      rect(-13*5,-20,13*5,0);
+      fill(0);
+      textSize(16);
+      textAlign(CENTER,BOTTOM);
+      text("Timer Done!",0,0);
+    }
   }
 }

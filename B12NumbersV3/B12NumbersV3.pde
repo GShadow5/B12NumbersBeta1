@@ -55,7 +55,8 @@ void draw(){
   //mode.display();
   
   //clock.display();
-  st.display();
+  //st.display();
+  timer.display();
   //point(-15,0);
   
 }
@@ -69,10 +70,6 @@ void mousePressed(){mh.cascade('p', mh.sMouseX(), mh.sMouseY(), mouseButton);}
 void mouseReleased(){mh.cascade('r', mh.sMouseX(), mh.sMouseY(), mouseButton);}
 void mouseWheel(MouseEvent event){mh.cascade('w', mh.sMouseX(), mh.sMouseY(), event.getCount());}
 void mouseDragged(){mh.cascade('d', mh.sMouseX(), mh.sMouseY(), mouseButton);}
-
-void call(String _call){
-  method(_call);
-}
 
 void changeMode(){
   if(calc == null){
@@ -90,10 +87,6 @@ void changeMode(){
 
 void reset(){
   calc.ex.clear();
-}
-
-void test(){
-  background(255,0,0);
 }
 
 void crossMark(){
