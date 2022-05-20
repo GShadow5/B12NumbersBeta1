@@ -1,12 +1,15 @@
 class Clock{
-  PVector pos;
-  MouseHandler mh;
-  Button[] buttons;
-  Button setTimeButton;
-  boolean setTime;
-  int cursorPos;
-  STime48 time;
-  TimeDisplay td;
+  /*
+      Self contained clock widget with time setting functionality
+  */
+  private PVector pos;
+  private MouseHandler mh;
+  private Button[] buttons;
+  private Button setTimeButton;
+  private boolean setTime;
+  private int cursorPos;
+  private STime48 time;
+  private TimeDisplay td;
   
   Clock(MouseHandler _mh, STime48 _time){
     pos = new PVector(0,0);
@@ -20,10 +23,10 @@ class Clock{
   
   PVector getPos(){return pos;}
   
-  Clock setPos(PVector _pos){pos = _pos.copy(); return this;}
+  Clock setPos(PVector _pos){pos = _pos.copy(); initialize(); return this;}
   Clock setPos(float x, float y){pos = new PVector(x,y); initialize(); return this;}
   
-  void initialize(){
+  private void initialize(){
     buttons = new Button[0];
     td.setPos(pos.x + 13*4 + 2,pos.y-2);    
     // Create numpad buttons
@@ -46,6 +49,7 @@ class Clock{
   }
   
   void addChar(B12Digit digit){
+    // Sets the time based on which button has been pressed, and where the cursor is
     switch(cursorPos){
       case 0:
         td.setTime(new Time48().setHour(digit.getValue() * 12)); cursorPos += 1; break;
@@ -62,11 +66,13 @@ class Clock{
     }
   }
   
+  // Sets the displayed time to a static 0
   void clearTime(){
     td.setTime(new Time48(0));
     cursorPos = 0;
   }
   
+  // Sets the synced time to that of the displayed time, then switches the diplayed time back to synced time
   void lockTime(){
     time.setTime(td.getTime());
     td.setTime(time);
@@ -74,11 +80,13 @@ class Clock{
     setTime = false;
   }
   
+  // Switches mode to setting the time
   void triggerSetTime(){
     clearTime();
     setTime = true;
   }
   
+  // Cancels setting the time, reverting the displayed time back to what synced time was before
   void cancelSetTime(){
     td.setTime(time); //<>//
     cursorPos = 0;

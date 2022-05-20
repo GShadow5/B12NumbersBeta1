@@ -3,19 +3,40 @@
     Beta version of a clock in base 12.
     by Nayan Sawyer
     started Mar 2022
-    version 0.2.1.3 May 19 2022
+    version 1.0.0.0 May 20 2022
     
     Characters are a variation of Kaktovik Inupiaq numerals
     reversed and in base 12 instead of 20. I take no credit 
     for the design.
     Includes method relay code by Quark - see https://forum.processing.org/two/discussion/13093/how-to-call-function-by-string-content.html
-    for more details.
+    for more details, and the library exp4j for evaluating mathematical expressions.
     
-    // DONE finish clock applications
-    // TODO assemble clock application
-    // TODO combine clock and calcualtor into final app
+    // DONE put everything back into seperate tabs
+    // DONE fully document everything
     // TODO add throwing exceptions to all contructors
+    // TODO add error message to calculator rather than having it do nothing when it doesn't work
+    // TODO add helper function to B12Expression.convert() so that conversion handles float/int determination on its own
+    // TODO refactor the base code to have ints and floats seperate from the digit and display code, and use a single object to convert a number to digits
     // MAYBE add additional operations like power, log, and trig functions
+    // MAYBE add other button highlight options like transparency
+    
+    BUGTRACKER
+    - something fishy with button highlight colors
+    - lazy positioning with ClockApp. Should move Stopwatch too
+    - B12Float and B12Int return their digits in opposite orders
+    - B12Float still uses mode DECIMAL
+    - Time48 does not check its inputs in some constructors
+    - renderPriority in Button is only half implemented
+    - negative signs when timer ends (not urgent)
+    
+    changelog 1.0.0.0
+    - Finished project to fully working state. Still lots of 
+    bugs to squash, and structural problems with the base 
+    code of the gui elements. But I don't have time to perfect
+    all of it at the moment. I will probably come back to it
+    in the future.
+    Put everything back into seperate files
+    Finished documentation for final project submission
     
     changelog 0.2.1.3
     - Finished timer. All clock apps are now complete. Some 

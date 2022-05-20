@@ -1,12 +1,15 @@
 class TimeDisplay {
-  PVector pos;
-  Time48 t48;
-  B12Int hours;
-  B12Int minutes;
-  B12Int seconds;
-  B12Digit[] digits;
-  int tmillis;
-  color col;
+  /*
+      Displays a Time48. Can utilize both static Time48 and synced STime48
+  */
+  private PVector pos;
+  private Time48 t48;
+  private B12Int hours;
+  private B12Int minutes;
+  private B12Int seconds;
+  private B12Digit[] digits;
+  //private int tmillis;
+  private color col;
 
   TimeDisplay(Time48 _t48) {
     pos = new PVector(0, 0);
@@ -60,30 +63,9 @@ class TimeDisplay {
     digits = (B12Digit[])append(digits,new B12Digit(':'));
     digits = (B12Digit[])concat(digits,hours.getDigits());
     
-    
     // Position
     for(int i = 0; i < digits.length; i++){
       digits[i].setPos(i*-13 + pos.x - 13,pos.y).setCol(col).display();
     }
-
-    // Position
-    /*
-    hours.setPos(-64, 0);
-    minutes.setPos(-32, 0);
-    seconds.setPos(0, 0);
-    B12Digit c1 = new B12Digit(':');
-    B12Digit c2 = new B12Digit(':');
-    c1.setPos(-34, 0);
-    c2.setPos(-66, 0);
-
-    // Display
-    pushMatrix();
-    translate(pos.x, pos.y);
-    hours.display();
-    c2.display();
-    minutes.display();
-    c1.display();
-    seconds.display();
-    popMatrix();*/
   }
 }

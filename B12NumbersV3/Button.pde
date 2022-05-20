@@ -55,8 +55,8 @@ class Button{
   Button setDim(PVector _dim){dim = _dim.copy(); return this;}
   Button setRect(PVector _pos, PVector _dim){pos = _pos; dim = _dim; return this;}
   Button setRadius(float rad){radius = rad; return this;}
-  Button setColor(color c){col = c; return this;}
-  Button setColor(color c, color h){col = c; highlight = h; return this;}
+  Button setColor(color c){colorMode(RGB,255); col = c; return this;}
+  Button setColor(color c, color h){colorMode(RGB,255); col = c; highlight = h; return this;}
   Button autoHighlight(){ colorMode(RGB,255); highlight = color(int(red(col) * .85), int(green(col) * .85), int(blue(col) * .85)); return this; }
   Button setHighlight(color h){ highlight = h; return this; }
   Button setText(String t){text = t; return this;}
@@ -79,7 +79,7 @@ class Button{
     fill(textColor);
     textSize(textSize);
     if(renderPriority == 0){
-      while(textWidth(text) > dim.x * 0.95){ // WARNING! NOT ROBUST make this a function at some point to allow other rectModes to render properly
+      while(textWidth(text) > dim.x * 0.95){ // WARNING! NOT ROBUST! make this a function at some point to allow other rectModes to render properly
         textSize = textSize - 1;
         textSize(textSize);
       }
@@ -96,7 +96,7 @@ class Button{
     if(mouseOver && mouseButton == LEFT){
       //println("clicked" + this);
       function.execute(data);
-      mouseOver = false; // Very important. Without this a button retains its mouseOver status forever if it stops being displayed
+      mouseOver = false; // Very important. Without this a button retains its mouseOver status forever if it stops being displayed, causing it to register being clicked every time the mose is clicked anywhere
     }
   }
   

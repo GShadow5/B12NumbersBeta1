@@ -1,11 +1,14 @@
 class Stopwatch{
-  PVector pos;
-  MouseHandler mh;
-  STime48 time;
-  TimeDisplay td;
-  Button[] buttons;
-  boolean running;
-  color stopCol;
+  /*
+      A self contained stopwatch widget
+  */
+  private PVector pos;
+  private MouseHandler mh;
+  private STime48 time;
+  private TimeDisplay td;
+  private Button[] buttons;
+  private boolean running;
+  private color stopCol;
   
   Stopwatch(MouseHandler _mh){
     pos = new PVector(0,0);
@@ -17,7 +20,12 @@ class Stopwatch{
     initialize();
   }
   
-  void initialize(){
+  PVector getPos(){return pos;}
+  
+  Stopwatch setPos(PVector _pos){pos = _pos.copy(); return this;}
+  Stopwatch setPos(float x, float y){pos = new PVector(x,y); return this;}
+  
+  private void initialize(){
     stopCol = 100;
     td.setPos(pos.x + 13*4 + 2,pos.y-2).setCol(stopCol);
     buttons = (Button[])append(buttons, new Button(mh).setText("Start").setPos(new PVector(pos.x - 14 - 30,pos.y + 2)).setDim(new PVector(28,16)).setFunction(new MethodRelay(this, "startt")).setColor(220,150));

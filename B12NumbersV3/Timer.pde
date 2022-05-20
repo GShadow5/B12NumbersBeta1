@@ -1,4 +1,12 @@
 class Timer{
+  /*
+      A self contained timer widget
+      Based on Clock, but different enough that it does not inherit it
+      
+      Technically sets a synced time to zero, and subtracts whatever that 
+      synced time currently happens to be from a target Time48 set to the 
+      length of the timer and displays that as it gets smaller.
+  */
   PVector pos;
   MouseHandler mh;
   Button[] buttons;
@@ -24,7 +32,7 @@ class Timer{
   
   PVector getPos(){return pos;}
   
-  Timer setPos(PVector _pos){pos = _pos.copy(); return this;}
+  Timer setPos(PVector _pos){pos = _pos.copy(); initialize(); return this;}
   Timer setPos(float x, float y){pos = new PVector(x,y); initialize(); return this;}
   
   void initialize(){
@@ -49,7 +57,7 @@ class Timer{
     
   }
   
-  void addChar(B12Digit digit){
+  void addChar(B12Digit digit){ // Same as Clock
     switch(cursorPos){
       case 0:
         td.setTime(new Time48().setHour(digit.getValue() * 12)); cursorPos += 1; break;
@@ -103,11 +111,12 @@ class Timer{
     }else{
       setTimeButton.display();
     }
-    if(running == true){
+    if(running == true){ // This counts down when running, but allows displayed time to remain static when setting time
       td.setTime(new Time48().setTsec(target.tsec() - time.tsec()));
     }
     td.display();
-    if(td.getTime().tsec() < 0){
+    if(td.getTime().tsec() < 0){ // Display timer done message when timer is done. This also covers up whatever displayed time happens to be (weired negative signs atm)
+      colorMode(RGB,255);
       fill(255,0,0);
       rectMode(CORNERS);
       rect(-13*5,-20,13*5,0);
