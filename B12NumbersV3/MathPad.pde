@@ -24,7 +24,7 @@ class MathPad{
   }
   
   
-  void initialize(){
+  private void initialize(){
     buttons = new Button[0];
     // Create numpad buttons
     for(int i = 0; i < 12; i++){

@@ -3,7 +3,7 @@
     Beta version of a clock in base 12.
     by Nayan Sawyer
     started Mar 2022
-    version 1.0.0.0 May 20 2022
+    version 1.0.0.1 May 20 2022
     
     Characters are a variation of Kaktovik Inupiaq numerals
     reversed and in base 12 instead of 20. I take no credit 
@@ -28,6 +28,12 @@
     - Time48 does not check its inputs in some constructors
     - renderPriority in Button is only half implemented
     - negative signs when timer ends (not urgent)
+    - B12Digit.setValue() does not check input and only accepts ints
+    - B12Digit.getValue() returns int not byte
+    
+    changelog 1.0.0.1
+    - Some bug fixes, made more things private, and fixed 
+    timer
     
     changelog 1.0.0.0
     - Finished project to fully working state. Still lots of 

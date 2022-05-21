@@ -35,7 +35,7 @@ class Timer{
   Timer setPos(PVector _pos){pos = _pos.copy(); initialize(); return this;}
   Timer setPos(float x, float y){pos = new PVector(x,y); initialize(); return this;}
   
-  void initialize(){
+  private void initialize(){
     buttons = new Button[0];
     td.setPos(pos.x + 13*4 + 2,pos.y-2);    
     // Create numpad buttons
@@ -119,11 +119,11 @@ class Timer{
       colorMode(RGB,255);
       fill(255,0,0);
       rectMode(CORNERS);
-      rect(-13*5,-20,13*5,0);
+      rect(pos.x - 13*5,pos.y - 20,pos.x + 13*5,pos.y);
       fill(0);
       textSize(16);
       textAlign(CENTER,BOTTOM);
-      text("Timer Done!",0,0);
+      text("Timer Done!",pos.x,pos.y);
     }
   }
 }
