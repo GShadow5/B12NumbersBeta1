@@ -11,7 +11,7 @@ The number system is such that horizontal ticks on top represent multiples of fo
 
 I had grander plans for this program, but once I got into the details of how to construct event handlers for the mouse, and discovered that singletons are not allowed in Processing, I decided to postpone this project indefinitely. I am currently learning Vulkan and C++, and I hope to do more UI stuff using that at some point in the future, so I will probably remake this project someday, but until then this is all there is.
 
-## How to use
+## How to run
 If you have Processing installed all you need to do is download the source code and open B12NumbersV3.pde in the Processing IDE
 
 Alternatively, if you are on windows you can download the release version from the [releases](https://github.com/GShadow5/B12NumbersBeta1/releases) page, unzip it, and run the .exe file.
