@@ -9,7 +9,7 @@
     reversed and in base 12 instead of 20. I take no credit 
     for the design.
     Includes method relay code by Quark - see https://forum.processing.org/two/discussion/13093/how-to-call-function-by-string-content.html
-    for more details, and the library exp4j for evaluating mathematical expressions.
+    for more details. Also includes the library exp4j for evaluating mathematical expressions.
     
     // DONE put everything back into seperate tabs
     // DONE fully document everything
