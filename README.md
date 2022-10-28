@@ -1,5 +1,6 @@
 # B12NumbersV3
 Release version 1.0.0.0 now available! see [releases](https://github.com/GShadow5/B12NumbersBeta1/releases) for a download
+
 Note - changes after 1.0.0.0 are source code text only, and do not impact the release version
 
 This is a basic clock and calculator app that represents all numbers using base 12. The characters are designed after the ingenious Kaktovik Iñupiaq numerals, which were created by a group of middle schoolers in Kaktovik Alaska, to represent the base 20 counting system in Iñupiaq, their Inuit language. I take no credit for the design of the characters. I have merely co-opted the design for the development of this project because it is elegant and convenient to use for compound base number systems, and looks nothing like the Arabic numeral system.
