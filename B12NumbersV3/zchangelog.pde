@@ -1,13 +1,13 @@
 /*
     B12NumbersV3
-    Beta version of a clock in base 12.
+    Beta version of a clock and calculator in base 12.
     by Nayan Sawyer
     started Mar 2022
-    version 1.0.0.1 May 20 2022
+    version 1.0.0.2 Oct 28 2022
     
-    Characters are a variation of Kaktovik Inupiaq numerals
-    reversed and in base 12 instead of 20. I take no credit 
-    for the design.
+    Characters are a variation of Kaktovik Inupiaq numerals,
+    the orientation of which has been flipped and in base 12 
+    instead of 20. I take no credit for the design.
     Includes method relay code by Quark - see https://forum.processing.org/two/discussion/13093/how-to-call-function-by-string-content.html
     for more details. Also includes the library exp4j for evaluating mathematical expressions.
     
@@ -30,6 +30,9 @@
     - negative signs when timer ends (not urgent)
     - B12Digit.setValue() does not check input and only accepts ints
     - B12Digit.getValue() returns int not byte
+
+    changelog 1.0.0.2
+    - Added license and updated main B12NumbersV3 text header
     
     changelog 1.0.0.1
     - Some bug fixes, made more things private, and fixed 

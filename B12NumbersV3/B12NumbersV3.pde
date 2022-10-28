@@ -1,14 +1,15 @@
 /**
- * Nayan Sawyer  ns9573@bard.edu
+ * Base 12 Toolkit
+ * Nayan Sawyer
  * May 21 2022
- * CMSC 141
- * Final Project: Base 12 Toolkit
  *
  * Comments/Reflections: The calculator uses B12Expression, MathPad, B12Button, and MathDisplay.
  * The clock app uses Clock, Stopwatch, Timer, and TimeDisplay
  *
- * Collaboration Statement: I used the processing docs, method relay code by Quark - see https://forum.processing.org/two/discussion/13093/how-to-call-function-by-string-content.html
- * and the exp4j library see - https://www.objecthunter.net/exp4j/index.html
+ * This project uses method relay code by Quark that has been modified 
+ * - see https://forum.processing.org/two/discussion/13093/how-to-call-function-by-string-content.html for the source code
+ * This project uses the exp4j library unmodified, which is available under the Apache 2.0 license 
+ * - see https://www.objecthunter.net/exp4j/index.html
  */
 
 import net.objecthunter.exp4j.*; // Math expression evaluation library
